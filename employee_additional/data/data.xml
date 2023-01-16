@@ -1,0 +1,402 @@
+<odoo>
+	<record id="contract_exprire_reminder_mail" model="ir.cron">
+        <field name="name">Contract Expire Reminder</field>
+        <field name="model_id" ref="hr_contract.model_hr_contract"/>
+        <field name="state">code</field>
+        <field name="code">model.notify_contract()</field>
+        <field name='interval_number'>1</field>
+        <field name='interval_type'>days</field>
+        <field name="numbercall">-1</field>
+    </record>
+		
+
+	<!-- <record id="hr_rule_othet_alowence" model="hr.salary.rule">
+	    <field name="name">Other Allowance</field>
+	    <field name="sequence" eval="19"/>
+	    <field name="code">OALT</field>
+	    <field name="category_id" ref="hr_payroll_community.ALW"/>
+	    <field name="condition_select">none</field>
+	    <field name="amount_select">code</field>
+	    <field name="amount_python_compute">
+result =payslip.other_allowances + payslip.notice_payment + payslip.other_adjacement_allowance
+	    </field>
+	</record> -->
+
+
+	<!-- <record id="hr_rule_othet_advance" model="hr.salary.rule">
+	    <field name="name">Advance</field>
+	    <field name="sequence" eval="28"/>
+	    <field name="code">Adm</field>
+	    <field name="category_id" ref="hr_payroll_community.DED"/>
+	    <field name="condition_select">none</field>
+	    <field name="amount_select">code</field>
+	    <field name="amount_python_compute">
+result =payslip.advances_adv + payslip.other_deduction + payslip.other_adjacement_deduction + payslip.penalt_total
+	    </field>
+	</record> -->
+
+
+	
+	<record id="hr_rule_late_sdl" model="hr.salary.rule">
+	    <field name="name">SDL</field>
+	    <field name="sequence" eval="102"/>
+	    <field name="code">ADSDL</field>
+	    <field name="category_id" ref="hr_payroll_community.COMP"/>
+	    <field name="condition_select">none</field>
+	    <field name="amount_select">code</field>
+	    <field name="amount_python_compute">result = 0.04*categories.GROSS</field>
+	</record>
+
+
+	<record id="hr_rule_late_wcf" model="hr.salary.rule">
+	    <field name="name">WCF</field>
+	    <field name="sequence" eval="101"/>
+	    <field name="code">WCF_ADM</field>
+	    <field name="category_id" ref="hr_payroll_community.COMP"/>
+	    <field name="condition_select">none</field>
+	    <field name="amount_select">code</field>
+	    <field name="amount_python_compute">result = 0.005*categories.GROSS</field>
+	</record>
+	<!-- <record id="hr_rule_late_livin_arrears" model="hr.salary.rule">
+	    <field name="name">LIVING ALLOWANCE</field>
+	    <field name="sequence" eval="2"/>
+	    <field name="code">LIVIN</field>
+	    <field name="category_id" ref="hr_payroll_community.ALW"/>
+	    <field name="condition_select">none</field>
+	    <field name="amount_select">code</field>
+	    <field name="amount_python_compute">
+result = 0.0 
+if contract.is_in_probation == 'yes' and contract.probation_status in ('in_probation','extend_probation'):
+	result=BASIC * 0.65
+
+else:
+	result =BASIC * 0.65
+
+		</field>
+	</record> -->
+	<record id="hr_rule_nssf_employee" model="hr.salary.rule">
+	    <field name="name">NSSF EMPLOYER</field>
+	    <field name="sequence" eval="103"/>
+	    <field name="code">NSSFF_EMPLER</field>
+	    <field name="category_id" ref="hr_payroll_community.COMP"/>
+	    <field name="condition_select">none</field>
+	    <field name="amount_select">code</field>
+	    <field name="amount_python_compute">result = 0.1*categories.GROSS</field>
+	</record>
+
+
+
+	<record id="hr_rule_tnssf_employee" model="hr.salary.rule">
+	    <field name="name">NSSF EMPLOYEE</field>
+	    <field name="sequence" eval="119"/>
+	    <field name="code">NSSF_EMPLOYEE</field>
+	    <field name="category_id" ref="hr_payroll_community.DED"/>
+	    <field name="condition_select">none</field>
+	    <field name="amount_select">code</field>
+	    <field name="amount_python_compute">
+result = 0.1*categories.GROSS
+        </field>
+	</record>
+
+		<record id="hr_rule_nhif_employee_allow" model="hr.salary.rule">
+	    <field name="name">NHIF Employee</field>
+	    <field name="sequence" eval="122"/>
+	    <field name="code">NHIF_EMPLYEE</field>
+	    <field name="category_id" ref="hr_payroll_community.DED"/>
+	    <field name="condition_select">none</field>
+	    <field name="amount_select">code</field>
+	    <field name="amount_python_compute">
+if contract.employee_id.has_nhif == True:
+    if ( categories.GROSS - NFIFE )*0.03 >= 20000:
+        result =  (categories.GROSS - NFIFE)*0.03 *2
+    else:
+    	result = 20000 * 2
+else:
+	result=0.0
+	    </field>
+	</record>
+
+	<record id="hr_rule_nhif_employer_allow" model="hr.salary.rule">
+	    <field name="name">NHIF employer</field>
+	    <field name="sequence" eval="99"/>
+	    <field name="code">MDC_PR</field>
+	    <field name="category_id" ref="hr_payroll_community.COMP"/>
+	    <field name="condition_select">none</field>
+	    <field name="amount_select">code</field>
+	    <field name="amount_python_compute">
+if contract.employee_id.has_nhif == True:
+    if ( categories.GROSS - NFIFE )*0.03 >= 20000:
+        result =   (categories.GROSS - NFIFE )*0.03
+    else:
+    	result = 20000
+else:
+	result=0.0
+	    </field>
+	</record>
+
+	<record id="hr_rule_nhif_employee_topup_allow" model="hr.salary.rule">
+	    <field name="name">NHIF employee Top up</field>
+	    <field name="sequence" eval="22"/>
+	    <field name="code">NFIFE</field>
+	    <field name="category_id" ref="hr_payroll_community.ALW"/>
+	    <field name="condition_select">none</field>
+	    <field name="amount_select">code</field>
+	    <field name="amount_python_compute">
+if contract.employee_id.has_nhif == True:
+    if (categories.BASIC)*0.03 &lt; 20000:
+        result = 20000
+    else:
+    	result =(categories.BASIC)*0.03
+else:
+	result=0.0
+	    </field>
+	</record>
+
+	<record id="hr_rule_helsb_employee" model="hr.salary.rule">
+	    <field name="name">HELSB</field>
+	    <field name="sequence" eval="123"/>
+	    <field name="code">HELSB</field>
+	    <field name="category_id" ref="hr_payroll_community.DED"/>
+	    <field name="condition_select">none</field>
+	    <field name="amount_select">code</field>
+	    <field name="amount_python_compute">
+result = 0
+if payslip.helsb_payslip > 0:
+	f_amt = (BASIC*15)/100
+	if payslip.helsb_payslip > f_amt:
+		result = (BASIC*15)/100
+	else:
+		result = payslip.helsb_payslip
+else:
+	result=0.0
+	    </field>
+	</record>
+
+	<record id="hr_rule_cowtu_employee" model="hr.salary.rule">
+	    <field name="name">COWTU</field>
+	    <field name="sequence" eval="19"/>
+	    <field name="code">COWTU</field>
+	    <field name="category_id" ref="hr_payroll_community.DED"/>
+	    <field name="condition_select">none</field>
+	    <field name="amount_select">code</field>
+	    <field name="amount_python_compute">
+result = BASIC * 0.02
+		</field>
+	</record>
+
+	<record id="hr_rule_tasiwu_employee" model="hr.salary.rule">
+	    <field name="name">TASIWU</field>
+	    <field name="sequence" eval="19"/>
+	    <field name="code">TASIWU</field>
+	    <field name="category_id" ref="hr_payroll_community.DED"/>
+	    <field name="condition_select">none</field>
+	    <field name="amount_select">code</field>
+	    <field name="amount_python_compute">
+result = BASIC * 0.02
+		</field>
+	</record>
+
+	<record id="hr_rule_food_allownce_employee" model="hr.salary.rule">
+	    <field name="name">FOOD Allowance</field>
+	    <field name="sequence" eval="19"/>
+	    <field name="code">FOOD</field>
+	    <field name="category_id" ref="hr_payroll_community.ALW"/>
+	    <field name="condition_select">none</field>
+	    <field name="amount_select">code</field>
+	    <field name="amount_python_compute">result = payslip.food_allowance</field>
+	</record>
+
+	<record id="hr_rule_enjoyee_leave_employee" model="hr.salary.rule">
+	    <field name="name">LEAVE Allowance</field>
+	    <field name="sequence" eval="19"/>
+	    <field name="code">LEA</field>
+	    <field name="category_id" ref="hr_payroll_community.ALW"/>
+	    <field name="condition_select">none</field>
+	    <field name="amount_select">code</field>
+	    <field name="amount_python_compute">
+result = 0 
+	    </field>
+	</record>
+
+
+	<record id="hr_payroll_community_hr_rule_basic" model="hr.salary.rule">
+	    <field name="name">Basic Salary</field>
+	    <field name="sequence" eval="1"/>
+	    <field name="code">BASIC</field>
+	    <field name="category_id" ref="hr_payroll_community.BASIC"/>
+	    <field name="condition_select">none</field>
+	    <field name="amount_select">code</field>
+	    <field name="amount_python_compute">
+result=payslip.basic_amount
+	    </field>
+	</record>
+	
+	<record id="hr_payroll_community_hr_rule_taxable" model="hr.salary.rule">
+	    <field name="name">Gross</field>
+	    <field name="sequence" eval="100"/>
+	    <field name="code">GROSS</field>
+	    <field name="category_id" ref="hr_payroll_community.GROSS"/>
+	    <field name="condition_select">none</field>
+	    <field name="amount_select">code</field>
+	    <field name="amount_python_compute">
+final_amount = 	 categories.BASIC + categories.ALW    
+result = final_amount
+</field>
+	</record>
+
+
+	<record id="hr_rule_payee" model="hr.salary.rule">
+	    <field name="name">PAYEE</field>
+	    <field name="sequence" eval="110"/>
+	    <field name="code">PAYEE</field>
+	    <field name="category_id" ref="hr_payroll_community.DED"/>
+	    <field name="condition_select">none</field>
+	    <field name="amount_select">code</field>
+	    <field name="amount_python_compute">
+
+if TXB &lt; 270000:
+    result = 0
+elif TXB >270000 and TXB &lt;= 520000:
+    result = ((TXB-270001)*0.08)
+elif TXB >520000 and TXB &lt;= 760000:
+    result = (((TXB-520000)*0.2) + 20000)
+elif TXB >760000 and TXB &lt;= 1000000:
+    result =((((TXB)-760000)*0.25) + 68000)
+else:
+    result = ((((TXB)-1000000)*0.3) + 128000)   
+	    </field>
+	</record>
+
+
+	<record id="hr_rule_medical_allownce_employee" model="hr.salary.rule">
+	    <field name="name">Medical Allowance</field>
+	    <field name="sequence" eval="21"/>
+	    <field name="code">MDA</field>
+	    <field name="category_id" ref="hr_payroll_community.ALW"/>
+	    <field name="condition_select">none</field>
+	    <field name="amount_select">code</field>
+	    <field name="amount_python_compute"> 
+result = payslip.contract_id.medical_allowance
+	    </field>
+	</record>	
+
+	<record id="hr_rule_total_allowance" model="hr.salary.rule">
+	    <field name="name">TOTAL ALLOWANCE</field>
+	    <field name="sequence" eval="149"/>
+	    <field name="code">ALW</field>
+	    <field name="category_id" ref="employee_additional.All_total"/>
+	    <field name="condition_select">none</field>
+	    <field name="amount_select">code</field>
+	    <field name="amount_python_compute">result = categories.ALW</field>
+	</record>
+
+
+
+
+	<record id="hr_rule_taxable_amount" model="hr.salary.rule">
+	    <field name="name">TAXABLE</field>
+	    <field name="sequence" eval="105"/>
+	    <field name="code">TXB</field>
+	    <field name="category_id" ref="employee_additional.Taxable"/>
+	    <field name="condition_select">none</field>
+	    <field name="amount_select">code</field>
+	    <field name="amount_python_compute">
+result = categories.GROSS - (categories.GROSS *0.1)
+		</field>
+	</record>
+
+
+
+	<record id="hr_rule_total_nssf" model="hr.salary.rule">
+	    <field name="name">NSSF TOTAL</field>
+	    <field name="sequence" eval="140"/>
+	    <field name="code">TNSSF</field>
+	    <field name="category_id" ref="employee_additional.Nssf_total"/>
+	    <field name="condition_select">none</field>
+	    <field name="amount_select">code</field>
+	    <field name="amount_python_compute">
+result = NSSFF_EMPLER + NSSF_EMPLOYEE
+        </field>
+	</record>
+
+	<record id="hr_rule_total_nhif" model="hr.salary.rule">
+	    <field name="name">NHIF TOTAL</field>
+	    <field name="sequence" eval="145"/>
+	    <field name="code">TNHIF</field>
+	    <field name="category_id" ref="employee_additional.Nhif_total"/>
+	    <field name="condition_select">none</field>
+	    <field name="amount_select">code</field>
+	    <field name="amount_python_compute">result = NHIF_EMPLYEE * 2</field>
+	</record>
+
+	<record id="hr_rule_total_deductions" model="hr.salary.rule">
+	    <field name="name">TOTAL DEDUCTIONS</field>
+	    <field name="sequence" eval="148"/>
+	    <field name="code">TXD</field>
+	    <field name="category_id" ref="employee_additional.Ded_total"/>
+	    <field name="condition_select">none</field>
+	    <field name="amount_select">code</field>
+	    <field name="amount_python_compute">result = categories.DED</field>
+	</record>
+
+	<record id="hr_rule_total_net_salary" model="hr.salary.rule">
+	    <field name="name">NET SALARY</field>
+	    <field name="sequence" eval="200"/>
+	    <field name="code">NET</field>
+	    <field name="category_id" ref="hr_payroll_community.NET"/>
+	    <field name="condition_select">none</field>
+	    <field name="amount_select">code</field>
+	    <field name="amount_python_compute">result = categories.BASIC + categories.ALW - categories.DED</field>
+	</record>
+
+
+</odoo>
+
+
+
+<!-- <odoo>
+
+    
+
+
+
+
+result = categories.GROSS - (categories.GROSS *0.1)
+TAXABLE
+
+       									        
+</odoo> -->
+<!-- result = 0.0
+if contract.employee_id.nhif_required == True:
+    if (categories.BASIC + LIVIN  + DARRS + DARRSP + FARRS + CRA + FOOD + LEA + FST  + CNA + MDA + IAL + IARR + PJA)*0.03 > 20000:
+        result = 20000
+    else:
+    	result =(categories.BASIC + LIVIN  + DARRS + DARRSP + FARRS + CRA + FOOD + LEA + FST  + CNA + MDA + IAL + IARR + PJA )*0.03
+else:
+	result=0.0 -->
+
+
+<!--BASIC-->
+<!--final_amount = contract.wage-->
+<!--if contract.is_in_probation == 'yes' and contract.probation_status in ('in_probation','extend_probation'):-->
+<!--	gross_amt = (contract.grade_id.gross_amount *83.333)/100-->
+<!--	fd = gross_amt /1.65-->
+<!--	result=(fd * payslip.late_days_calculation)/payslip.number_of_days_mouth-->
+
+<!--elif contract.is_in_probation == 'no' and payslip.probation_salary_days > 0:-->
+<!--	gross_amt = (contract.grade_id.gross_amount *83.333)/100-->
+<!--	fd = (gross_amt /1.65 * (payslip.all_employees_month_days - payslip.probation_salary_days))/payslip.all_employees_month_days-->
+<!--	result= (fd +(contract.wage * payslip.probation_salary_days)/payslip.all_employees_month_days)-->
+<!--else:-->
+<!--	result = final_amount-->
+
+
+<!--result = 0.0 -->
+<!--final_amt = 0.0-->
+<!--inch_id = contract.incharge_allonce_id-->
+<!--if inch_id:-->
+<!--	for rec in inch_id.line_ids:-->
+<!--		final_amt = final_amt + rec.amount-->
+<!--	result = final_amt-->
+<!--else:-->
+<!--	result = 0.0-->

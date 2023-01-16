@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="worker_compensation_report">
+    	<t t-call="web.basic_layout">
+            <t t-call="web.html_container">
+                <div class="page">
+                	<div class="oe_structure" />
+                    <p style='text-align: center;'><strong>WORKERS COMPESATION FUND(WCF)</strong></p>
+                    <p><strong>List of amount contributed for each employee</strong></p>
+        			<p><strong>Employer’s Name :</strong><strong>EDUCATION NETWORK-TEN/MET</strong></p>
+        			<p><strong>WCF Reg. No :</strong><strong>#####</strong></p>
+        			<p><strong>Applicable Month :</strong><span t-esc="get_applicable_month(docs)"/></p>
+        			<p><strong>Applicable Contribution during :</strong><span t-esc="get_applicable_during(docs)"/></p>
+                    <table width="100%">
+                            <tr>
+                                <th width="10%">SR.</th>
+                                <th width="25%">Employee ID</th>
+                                <th  width="25%">Employee Name</th>
+                                <th  width="25%">Employee Basic Salary</th>
+                                <th  width="25%">Employee Gross Salary</th>
+                            </tr>
+                        <tbody>
+                            <tr t-foreach="docs" t-as="o">
+                                <td  width="25%"><span t-esc="get_lines(docs).get(o.employee_id.id).get('cnt')" t-options='{"widget": "float", "precision": 2}'/></td>
+                                <td  width="25%"><span t-esc="get_lines(docs).get(o.employee_id.id).get('emp_id')" /></td>
+                                <td  width="25%"><span t-esc="get_lines(docs).get(o.employee_id.id).get('emp_name')" /></td>
+                                <td  width="25%"><span t-esc="get_lines(docs).get(o.employee_id.id).get('basic')" t-options='{"widget": "float", "precision": 2}'/></td>
+                                <td  width="25%"><span t-esc="get_lines(docs).get(o.employee_id.id).get('gross')" t-options='{"widget": "float", "precision": 2}'/></td>
+                            </tr>
+                            <tr >
+                                <td  width="25%"></td>
+                                <td  width="25%"></td>
+                                <td  width="25%">Total</td>
+                                <td  width="25%" style='text-align:right;'><span t-esc="get_total_basic(docs)" t-options='{"widget": "float", "precision": 2}'/></td>
+                                <td  width="25%" style='text-align:right;'><span t-esc="get_total_gross(docs)" t-options='{"widget": "float", "precision": 2}'/></td>
+                            </tr>
+                            <tr >
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>Total Contributions-1% of the Gross PAY</td>
+                                <td style='text-align:right;'><span t-esc="get_total_gross_one_per(docs)" t-options='{"widget": "float", "precision": 2}'/></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br/>
+                    <br/>
+                   <p>Employer’s Authorising Officer</p>
+                   <p>I hereby certify that to the best of my knowledge all particulars in this attachment are complete true and correct</p>
+                   <p>Signature of Employer:   ……………………………………………………..</p>
+                   <p>Name : …………………………………………………….</p>
+                   <p>Position: ……………………………………………………..</p>
+                   <p>Date: ………………………………………………………</p>
+                   <p>Your Official Stamp</p>
+                </div>
+            </t>
+        </t>
+    </template>
+
+
+</odoo>

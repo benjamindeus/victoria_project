@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+        <record id="view_payee_statmentxls_report" model="ir.ui.view">
+            <field name="name">monthly.statement.xls.report</field>
+            <field name="model">monthly.statement.xls</field>
+            <field name="arch" type="xml">
+            <form string="monthly Statement Xls Report">
+                <group col="4">
+                    <field name="date_from"/>
+                    <field name="date_to"/>
+                </group>
+                <group>
+                	<field name="report_status" options="{'horizontal':True}" widget="radio" string='Report Status'/>
+                	<field name="struct_ids" widget="many2many_tags"/>
+                </group>
+                <footer>
+                    <button name="print_report" string="Print" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+            </field>
+        </record>
+        
+        <record id="action_payslip_monthly_report_xls" model="ir.actions.act_window">
+            <field name="name">Monthly Statement Xls</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">monthly.statement.xls</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="binding_model_id" ref="model_hr_payslip" />
+            <field name="binding_type">report</field>
+        </record> 
+
+	<menuitem id="menu_action_monthly_statement_xls_report"
+                  action="action_payslip_monthly_report_xls"
+                  name="Monthly Payroll report"
+                  parent="menu_hr_payslip_report_menu_custom"/>
+
+    <!-- <menuitem  action="action_payslip_monthly_report_xls" id="menu_hr_payslip_report_menuxxxxxx" parent="menu_hr_payslip_report_menu_custom"/> -->
+    
+                  
+                  
+ </odoo>

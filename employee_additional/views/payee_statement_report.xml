@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<template id="report_payee_statement">
+<t t-call="web.basic_layout">
+    <t t-call="web.html_container">
+        <t>
+            <t>
+                <div class="page">
+                <div class="oe_structure" />
+                <center>
+                    <img src="/hr_payroll_community/static/src/img/logoTRA.png" 
+                        height="100px" width="200px"/>
+                </center>
+                	<table width="100%">
+                		<tr>
+                			<td>
+                			</td>
+                		<th><u>TANZANIA REVENUE AUTHORITY</u></th>
+                		<td>
+               			</td>
+                		</tr>
+                		<tr>
+                			<td>
+                			</td>
+                			
+                			<th>P.A.Y.E.</th>
+                			<td>
+                			</td>
+                		</tr>
+                		<tr>
+                			<td>
+                			</td>
+                			<th>STATEMENT AND PAYMENT OF TAX WITHHELD</th>
+                			<td>
+                			</td>
+                		</tr>
+                </table>
+                <table width="100%" >
+                		<tr>
+                			<td width="20.33%">
+                			</td>
+                			<td width="33.33%">
+                			</td>
+                			<td width="43.33%">
+                				<span>Year: </span>
+                				<div style='display:inline-block;width: 25px;height: 20px;border: 1px solid black;'>
+	          						<span t-esc="get_applicable_month(data['form']['date_from'])[0]"/>
+	          					</div>
+	          					<div style='display:inline-block;width: 25px;height: 20px;border: 1px solid black;'>
+	          						<span t-esc="get_applicable_month(data['form']['date_from'])[1]"/>
+	          					</div>
+	          					<div style='display:inline-block;width: 25px;height: 20px;border: 1px solid black;'>
+	          						<span t-esc="get_applicable_month(data['form']['date_from'])[2]"/>
+	          					</div>
+	          					<div style='display:inline-block;width: 25px;height: 20px;border: 1px solid black;'>
+	          						<span t-esc="get_applicable_month(data['form']['date_from'])[3]"/>
+	          					</div>
+                			</td>
+                		</tr>
+                		<tr>
+                			<td>
+                			</td>
+                			<td>
+                			</td>
+                			<td>
+                				<span style='white-space:pre"display:inline-block;'>TIN: </span>
+				                <t t-foreach="env.user.company_id.tin" t-as="tin">
+				                	<div style='text-align:center;display:inline-block;width: 25px;height: 20px;border: 1px solid black;'><span t-esc='tin'/></div>
+				                </t>
+                			</td>
+                		</tr>
+                	</table>
+                	<table width="100%">
+	          				<tr>
+	          					<th>
+	          						Period(please tick the appropriate box)
+	          					</th>
+	          				</tr>
+	          				<tr>
+	          					<td>
+	          						<div style='display:inline-block;width: 25px;height: 20px;border: 1px solid black;'>
+	          							<input t-if="data.get('year')=='half'" type="checkbox" id="oe_import_tracking" checked="checked"/>
+	          						</div>
+	          					<b>From 1st January to 30th June</b>
+	          					</td>
+	          				</tr>
+	          				<tr>
+	          					<td>
+	          						<div style='display:inline-block;width: 20px;height: 20px;border: 1px solid black;'>
+          							    <input t-if="data.get('year')=='full'" type="checkbox" id="oe_import_tracking" checked="checked"/>
+	          						</div>
+	          					<b>From 1 January to 31 December</b>
+	          					</td>
+	          				</tr>
+	          	</table>
+	          	<table width="100%">
+	          	<tr>
+	          		<td colspan="4"><span>Name of Employer</span></td>
+	          	</tr>
+	          	<tr>
+    			   <td colspan="4" style='height:25px;border:1px solid black;'>
+    			   		<span t-field="env.user.company_id.name"/>
+    			   </td>
+	          	</tr>
+	          	<tr>
+	          		<th>Postal Address</th>
+	          	</tr>
+	          	<tr width="100%">
+	          		<td width="15%">P. O. Box .</td>
+	          		<td width="30%" style='width:30px;height:25px;border: 1px solid black;'><span t-field="env.user.company_id.street2"/></td>
+	          		<td width="10%"></td>
+	          		<td width="15%">Postal City </td>
+	          		<td width="30%" style='width:30px;height:25px;border: 1px solid black;'><span t-field="env.user.company_id.city"/></td>
+	          	</tr>
+	          	<tr width="100%">
+	          		<th colspan="2" style="text-align:left" width="15%">Contact Numbers:</th>
+	          		<th colspan="3"></th>
+	          	</tr>
+	          	<tr>
+	          		<td width="15%">Phone number  </td>
+	          		<td width="30%" style='height:25px;border: 1px solid black;'><span t-field="env.user.company_id.phone"/></td>
+	          		<td width="10%"></td>
+	          		<td width="15%">Second Phone </td>
+	          		<td width="30%" style='height:25px;border: 1px solid black;'></td>
+	          	</tr>
+	          	<tr>
+	          		<td width="15%">Third Phone  </td>
+	          		<td width="30%" style='height:25px;border: 1px solid black;'></td>
+	          		<td width="10%"></td>
+	          		<td width="15%">Fax number </td>
+	          		<td width="30%" style='height:25px;border: 1px solid black;'></td>
+	          	</tr>
+	          	<tr>
+	          		<th style="text-align:left" width="15%">E-mail address</th>
+          			<td  width="15%" style='height:25px;border:1px solid black;'>
+   			   			<span t-field="env.user.company_id.email"/>
+   			   		</td>
+	          	</tr>
+	          	<tr>
+	          		<th colspan="2" style="text-align:left" width="15%">Physical Address:</th>
+	          		<th colspan="3"></th>
+	          	</tr>
+	          	<tr>
+	          		<td width="15%">Plot Number.  </td>
+	          		<td width="30%" style='height:25px;border: 1px solid black;'><span t-field="env.user.company_id.street"/></td>
+	          		<td width="10%"></td>
+	          		<td width="15%"></td>
+	          		<td width="30%" style='height:25px;border: 1px solid black;'></td>
+	          	</tr>
+	          	</table>
+	          	<table width="100%">
+	          	<tr>
+	          		<td width="35%">
+	          			<span>Street/Location</span>
+	          		</td>
+	          		<td style='height:25px;border: 1px solid black;'><span t-field="env.user.company_id.street"/></td>
+	          	</tr>
+	          	<tr>
+	          		<td width="35%" style="margin-bottom:10px;">
+	          			<span>Name of Branch:</span>
+	          		</td>
+	          		<td style='height:25px;border: 1px solid black;'></td>
+	          	</tr>
+	          	</table>
+	          	<p style="page-break-after:always;">   </p>
+	          	<table width="100%">
+	          		<tr>
+	          			<th colspan="2">
+	          				P.A.Y.E. - DETAILS OF PAYMENT OF TAX WITHHELD
+	          			</th>
+	          		</tr>
+	          		<tr>
+	          			<td>
+	          				Name of Employer: 
+	          				<span t-field="env.user.company_id.name"/>
+	          			</td>
+	          			<td>
+	          				TIN: 
+	          			</td>
+	          			<td>
+	          				<t t-foreach="env.user.company_id.tin" t-as="tin">
+	                			<div style='text-align:center;display:inline-block;width: 25px;height: 20px;border: 1px solid black;'><span t-esc='tin'/></div>
+	                		</t>
+	          			</td>
+	          		</tr>
+	          	</table>
+	          	<table width="100%" style='border: 1px solid black;'>
+	          		<tr>
+	          			<td style='border: 1px solid black;' width="2%">S/NO.</td>
+	          			<td style='border: 1px solid black;'  width="12%">NAME OF EMPLOYEE</td>
+	          			<td style='border: 1px solid black;' width="7%">PAY ROLL NO.</td>
+	          			<td style='border: 1px solid black;' width="7%">POSTAL ADDRESS</td>
+	          			<td style='border: 1px solid black;'  width="7%">POSTAL CITY</td>
+	          			<td style='border: 1px solid black;' width="7%">BASIC PAY</td>
+	          			<td style='border: 1px solid black;' width="7%">HOUSING</td>
+	          			<td style='border: 1px solid black;' width="7%">ALLOWANCE AND BENEFIT</td>
+	          			<td style='border: 1px solid black;' width="7%">GROSS PAY</td>
+	          			<td style='border: 1px solid black;' width="7%">DEDUCTIONS</td>
+	          			<td style='border: 1px solid black;' width="7%">TAXABLE AMOUNT</td>
+	          			<td style='border: 1px solid black;' width="7%">TAX DUE</td>
+	          		</tr>
+	          		<t t-set="sr_no" t-value="0"/>
+	          		<tr t-foreach="get_lines(docs)" t-as="o">
+	          			<t t-set="sr_no" t-value="sr_no +1"/>
+	          			<td style='border: 1px solid black;' width="2%"><span t-esc="sr_no"/></td>
+	          			<td style='border: 1px solid black;'><span t-esc="get_lines(docs).get(o).get('emp_name')"></span></td>
+	          			<td style='border: 1px solid black;'><span t-esc="get_lines(docs).get(o).get('payroll_no')"/></td>
+	          			<td style='border: 1px solid black;'><span t-esc="get_lines(docs).get(o).get('postal_address')"></span></td>
+	          			<td style='border: 1px solid black;'><span t-esc="get_lines(docs).get(o).get('postal_code')"></span></td>
+	          			<td style='border: 1px solid black;text-align:right;'>
+	          				<t t-if="get_lines(docs).get(o).get('basic', 0.0)">
+                      		 	<t t-esc="'{0:,.2f}'.format(int(get_lines(docs).get(o).get('basic',0.0)))" />
+                      		 </t>
+	          			</td>
+	          			<td style='border: 1px solid black;text-align:right;'>
+	          				<t t-if="get_lines(docs).get(o).get('ha', 0.0)">
+                      		 	<t t-esc="get_lines(docs).get(o).get('ha',0.0)" t-options='{"widget": "float", "precision": 2}'/>
+                      		 </t>
+	          			</td>
+	          			<td style='border: 1px solid black;text-align:right;'>
+	          				<t t-if="get_lines(docs).get(o).get('alw', 0.0)">
+                      		 	<t t-esc="get_lines(docs).get(o).get('alw',0.0)" t-options='{"widget": "float", "precision": 2}'/>
+                      		 </t>
+	          			</td>
+	          			<td style='border: 1px solid black;text-align:right;'>
+	          				<t t-if="get_lines(docs).get(o).get('gross', 0.0)">
+                      		 	<t t-esc="get_lines(docs).get(o).get('gross',0.0)" t-options='{"widget": "float", "precision": 2}'/>
+                      		 </t>
+	          			</td>
+	          			<td style='border: 1px solid black;'>
+	          				<t t-if="get_lines(docs).get(o).get('ded', 0.0)">
+                      		 	<t t-esc="get_lines(docs).get(o).get('ded',0.0)" t-options='{"widget": "float", "precision": 2}'/>
+                      		 </t>
+	          			</td>
+	          			<td style='border: 1px solid black;'>
+	          				<t t-if="get_lines(docs).get(o).get('tax', 0.0)">
+                      		 	<t t-esc="get_lines(docs).get(o).get('tax',0.0)" t-options='{"widget": "float", "precision": 2}'/>
+                      		 </t>
+	          			</td>
+	          			<td style='border: 1px solid black;'>
+	          				<t t-if="get_lines(docs).get(o).get('paye', 0.0)">
+                      		 	<t t-esc="get_lines(docs).get(o).get('paye',0.0)" t-options='{"widget": "float", "precision": 2}'/>
+                      		 </t>
+	          			</td>
+	          		</tr>
+	          	</table>
+                </div>
+           </t>
+        </t>
+                </t>
+    </t>
+</template>
+</odoo>

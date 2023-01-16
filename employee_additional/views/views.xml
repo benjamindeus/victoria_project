@@ -1,0 +1,74 @@
+<odoo>
+  <data>
+      <record id="view_employee_form_additional" model="ir.ui.view">
+        <field name="name">hr.employee.form.additional</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <field name="coach_id" position="after">
+                <field name="empl_id" placeholder="Assigned Employee Id"/>
+                <field name="nssf_number" placeholder="Employee NSSF Number" />
+                <field name="pspf_number" placeholder="Employee PSPF Number" />
+                <field name="nhif_number" placeholder="Employee NHIF Number" />
+                <field name="tin_number" placeholder="Employee TIN Number"/>
+                <!-- <field name="initial" readonly="1" force_save="1"/> -->
+            </field>
+            <field name="work_email" position="after">
+                <field name="has_nhif"/>
+                <field name="form_4_number"/>
+                <!-- <field name="initial" readonly="1" force_save="1"/> -->
+            </field>
+
+            <xpath expr="//notebook/page[@name='personal_information']" position="after">
+        		<page name="helsb" string="HESLB DETAILS">
+        			<field name="helsb_line_ids" nolabel="1">
+        				<tree editable="bottom">
+        					<field name="name" required="1"/>
+        					<field name="date" />
+                            <field name="amount"/>
+                            <field name="balance_amt" readonly="1" force_save="1" />
+			                <field name="employee_id" invisible="1"/>
+			            </tree>
+			        </field>
+        		</page>
+        	</xpath>
+        </field>
+    </record>
+
+
+    <record id="view_hr_payslip_form_inherit" model="ir.ui.view">
+        <field name="name">hr.payslip.form.inherit</field>
+        <field name="model">hr.payslip</field>
+        <field name="inherit_id" ref="hr_payroll_community.view_hr_payslip_form"/>
+        <field name="arch" type="xml">
+            <field name="credit_note" position="after">
+                <field name="helsb_payslip" invisible="1"/>
+                <field name="food_allowance" invisible="1"/>
+                <!-- <field name="medical" invisible="1"/> -->
+            </field>
+            <!-- <xpath expr="//page/field[@name='worked_days_line_ids']//tree/field[@name='name']" position="after">
+                <field name="number_of_days_show" />
+            </xpath> -->
+        </field>
+    </record>
+
+    <record id="company_details_athumani_changes" model="ir.ui.view">
+        <field name="name">res.company.form.inherit</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_form"/>
+        <field name="arch" type="xml">
+            <field name="vat" position="after">
+                <field name="tin" />
+            </field>
+        </field>
+    </record>
+
+
+
+    <menuitem name="All Reports" id="menu_hr_payslip_report_menu_custom" parent="hr_payroll_community.menu_hr_payroll_community_root"/>
+    <menuitem name="Monthy Reports" id="menu_hr_payslip_report_monthly_menu" parent="menu_hr_payslip_report_menu_custom"/>
+
+
+
+  </data>
+</odoo>

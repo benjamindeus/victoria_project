@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        <record id="Taxable" model="hr.salary.rule.category">
+            <field name="name">TAXABLE</field>
+            <field name="code">TAXABLE</field>
+        </record>
+
+        <record id="Nssf_total" model="hr.salary.rule.category">
+            <field name="name">NSSF TOTAL</field>
+            <field name="code">NSSFT</field>
+        </record>
+
+        <record id="Nhif_total" model="hr.salary.rule.category">
+            <field name="name">NHIF TOTAL</field>
+            <field name="code">TNHIF</field>
+        </record>
+        
+        <record id="tasiwu" model="hr.salary.rule.category">
+            <field name="name">TASIWU</field>
+            <field name="code">TASIWU</field>
+        </record>
+
+        <record id="cowtu" model="hr.salary.rule.category">
+            <field name="name">COWTU</field>
+            <field name="code">COWTU</field>
+        </record>
+
+        <record id="Ded_total" model="hr.salary.rule.category">
+            <field name="name">Total Ded</field>
+            <field name="code">TXD</field>
+        </record>
+
+      <record id="All_total" model="hr.salary.rule.category">
+            <field name="name">Total ALLOWANCE</field>
+            <field name="code">TALW</field>
+        </record>
+  
+    </data>
+</odoo>

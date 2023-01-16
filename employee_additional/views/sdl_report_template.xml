@@ -1,0 +1,594 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<template id="report_payroll_sdl">
+	<t t-call="web.basic_layout">
+    <t t-call="web.html_container">
+        <t>
+            <t>
+                <div class="page">
+                <div class="oe_structure" />
+                <center>
+                    <img src="/hr_payroll_community/static/src/img/logoTRA.png" 
+                        height="100px" width="200px"/>
+                </center>
+                <div>
+                	<center>
+                		<p  style='font-size:12px;'><u><b>TANZANIA REVENUE AUTHORITY</b></u></p>
+                		<p  style='font-size:12px;'><b>SKILLS AND DEVELOPMENT LEVY </b></p>
+                		<p  style='font-size:12px;'><b>EMPLOYER’S HALF YEAR </b> </p>
+                		<div style='display:inline-block;width: 25px;height: 20px;border: 1px solid black;'>
+        						<span t-esc="get_applicable_month(data['form']['date_from'])[0]"/>
+        					</div>
+        					<div style='display:inline-block;width: 25px;height: 20px;border: 1px solid black;'>
+        						<span t-esc="get_applicable_month(data['form']['date_from'])[1]"/>
+        					</div>
+        					<div style='display:inline-block;width: 25px;height: 20px;border: 1px solid black;'>
+        						<span t-esc="get_applicable_month(data['form']['date_from'])[2]"/>
+        					</div>
+        					<div style='display:inline-block;width: 25px;height: 20px;border: 1px solid black;'>
+        						<span t-esc="get_applicable_month(data['form']['date_from'])[3]"/>
+        					</div>
+                		<br/><span style='font-size:10px;'>(To be submitted to the TRA office within 30 days after the end of each six-month calendar period)</span>
+                	</center>
+                </div>
+                </div>
+                <div width="80%" style="border-top: 2px solid black;">
+                </div>
+                <span style="font-size:10px;border: 1px solid black;">EMPLOYER’S INFORMATION</span> 
+	                <br/><span style='font-size:10px;white-space:pre"display:inline-block;'>TIN: </span>
+	                <t t-foreach="env.user.company_id.tin" t-as="tin">
+	                	<div style='font-size:10px;text-align:center;display:inline-block;width: 25px;height: 20px;border: 1px solid black;'><span t-esc='tin'/></div>
+	                </t>
+	          <table width="100%">
+	          	<tr>
+	          		<td colspan="5"><span style='font-size:10px;'>Name of Employer</span></td>
+	          	</tr>
+	          	<tr>	
+    			   <td colspan="5" style='height:25px;border:1px solid black;'>
+    			   		<span style='font-size:10px;' t-field="env.user.company_id.name"/>
+    			   </td>
+	          	</tr>
+	          	<tr>
+	          		<td colspan="5" style='font-size:10px;'>Postal Address</td>
+	          	</tr>
+	          	<tr width="100%">
+	          		<td width="15%" style='font-size:10px;'>P. O. Box .</td>
+	          		<td width="30%" style='font-size:10px;width:30px;height:25px;border: 1px solid black;'><span t-field="env.user.company_id.street2"/></td>
+	          		<td width="10%"></td>
+	          		<td width="15%" style='font-size:10px;'>Postal City </td>
+	          		<td width="30%" style='width:30px;height:25px;border: 1px solid black;'><span t-field="env.user.company_id.city"/></td>
+	          	</tr>
+	          	<tr>
+	          		<td style='font-size:10px;'>Physical Address</td>
+	          	</tr>
+	          	<tr>
+	          		<td width="15%" style='font-size:10px;'>Plot Number.  </td>
+	          		<td width="30%" style='font-size:10px;height:35px;border: 1px solid black;'><span t-field="env.user.company_id.street"/></td>
+	          		<td width="10%"></td>
+	          		<td width="15%" style='font-size:10px;'>Block Number    </td>
+	          		<td width="30%" style='font-size:10px;height:35px;border: 1px solid black;'><span t-field="env.user.company_id.street"/></td>
+	          	</tr>
+	          	</table>
+	          	<table width="100%">
+	          	<tr>
+	          		<td width="35%">
+	          			<span style='font-size:10px;'>Street/Location</span>
+	          		</td>
+	          		<td style='font-size:10px;height:25px;border: 1px solid black;'><span t-field="env.user.company_id.street"/></td>
+	          	</tr>
+	          	<tr>
+	          		<td width="35%" style="margin-bottom:10px;">
+	          			<span style='font-size:10px;'>Nature of business:</span>
+	          		</td>
+	          		<td style='font-size:10px;height:25px;border: 1px solid black;'></td>
+	          	</tr>
+	          	<tr>
+	          		<td style="margin-bottom:5px;">
+	          			<span style='font-size:10px;'>State whether an Entity or Individual:</span>
+	          		</td>
+	          		<td style='height:25px;border: 1px solid black;'></td>
+	          	</tr>
+	          	</table>
+	          			<table width="100%" style='border: 1px solid black;'>
+	          				<tr>
+				          		<td colspan="5" style='font-size:10px;'><b>SUMMARY OF GROSS EMOLUMENTS AND TAX PAID DURING THE YEAR</b></td>	
+				          	</tr>
+				          	<br></br>
+	          				<tr style='border: 1px solid black;height:35px;'>
+	          					<th  style='font-size:10px;border: 1px solid black;' width="20%">Month</th>
+	          					<th  style='font-size:10px;border: 1px solid black;' width="20%">Payment to permanent employees/TZS</th>
+	          					<th  style='font-size:10px;border: 1px solid black;' width="20%">Payment to casual employees/TZS</th>
+	          					<th  style='font-size:10px;border: 1px solid black;' width="20%">Total gross emoluments TZS</th>
+	          					<th  style='font-size:10px;border: 1px solid black;' width="20%">Amount of SDL paid TZS</th>
+	          				</tr>
+	          				<tr>
+	          					<td  style='font-size:10px;border: 1px solid black;'>January</td>
+	          					<td  style='font-size:10px;border: 1px solid black;'>
+	          					<t t-if="get_lines(data.get('ids'), 
+	          					data['form'].get('date_from'), data['form'].get('date_to')).get('1')">
+	          					<span t-esc="get_lines(data.get('ids'), 
+	          					data['form'].get('date_from'), data['form'].get('date_to')).get('1').get('p_gross')" t-options='{"widget": "float", "precision": 2}'/>
+	          					</t></td>
+	          					<td  style='font-size:10px;border: 1px solid black;'>
+						        <t t-if="get_lines(data.get('ids'), 
+	          					data['form'].get('date_from'), data['form'].get('date_to')).get('1')">
+	          					<t t-if="get_lines(data.get('ids'), 
+	          					data['form'].get('date_from'), data['form'].get('date_to')).get('1').get('c_gross')">
+	          					<span t-esc="get_lines(data.get('ids'), 
+	          					data['form'].get('date_from'), data['form'].get('date_to')).get('1').get('c_gross')" t-options='{"widget": "float", "precision": 2}'/>
+	          					</t></t></td>
+	          					<td  style='font-size:10px;border: 1px solid black;'>
+	          					<t t-if="get_lines(data.get('ids'), 
+	          					data['form'].get('date_from'), data['form'].get('date_to')).get('1')">
+	          					<span t-esc="get_lines(data.get('ids'), 
+	          					data['form'].get('date_from'), data['form'].get('date_to')).get('1').get('total_emt_tzs')" t-options='{"widget": "float", "precision": 2}'/>
+	          					</t>
+	          					</td>
+	          					<td  style='font-size:10px;border: 1px solid black;'>
+	          					<t t-if="get_lines(data.get('ids'), 
+	          					data['form'].get('date_from'), data['form'].get('date_to')).get('1')">
+	          					<t t-set="tz_total_per" t-value="get_lines(data.get('ids'), 
+	          					data['form'].get('date_from'), data['form'].get('date_to')).get('1').get('total_emt_tzs')" />
+	          					 <t t-esc="'{0:,.2f}'.format(int(tz_total_per*4.5/100))" />
+	          					</t>
+	          					</td>
+	          				</tr>
+	          				<tr>
+	          					<td  style='font-size:10px;border: 1px solid black;'>February</td>
+	          					<td  style='font-size:10px;border: 1px solid black;'>
+	          					<t t-if="get_lines(data.get('ids'), 
+	          					data['form'].get('date_from'), data['form'].get('date_to')).get('2')">
+	          					<span t-esc="get_lines(data.get('ids'), 
+	          					data['form'].get('date_from'), data['form'].get('date_to')).get('2').get('p_gross')" t-options='{"widget": "float", "precision": 2}'/>
+	          					</t></td>
+	          					<td  style='font-size:10px;border: 1px solid black;'>
+	          					<t t-if="get_lines(data.get('ids'), 
+	          					data['form'].get('date_from'), data['form'].get('date_to')).get('2')">
+	          					<t t-if="get_lines(data.get('ids'), 
+	          					data['form'].get('date_from'), data['form'].get('date_to')).get('2').get('c_gross')">
+	          					<span t-esc="get_lines(data.get('ids'), 
+	          					data['form'].get('date_from'), data['form'].get('date_to')).get('2').get('c_gross')" t-options='{"widget": "float", "precision": 2}'/>
+	          					</t></t></td>
+	          					<td style='font-size:10px;border: 1px solid black;'>
+	          					<t t-if="get_lines(data.get('ids'), 
+	          					data['form'].get('date_from'), data['form'].get('date_to')).get('2')">
+	          					<span t-esc="get_lines(data.get('ids'), 
+	          					data['form'].get('date_from'), data['form'].get('date_to')).get('2').get('total_emt_tzs')" t-options='{"widget": "float", "precision": 2}'/>
+	          					</t>
+	          					</td>
+	          					<td style='font-size:10px;border: 1px solid black;'>
+	          					<t t-if="get_lines(data.get('ids'), 
+	          					data['form'].get('date_from'), data['form'].get('date_to')).get('2')">
+	          					<t t-set="tz_total_per" t-value="get_lines(data.get('ids'), 
+	          					data['form'].get('date_from'), data['form'].get('date_to')).get('2').get('total_emt_tzs')" />
+	          					 <t t-esc="'{0:,.2f}'.format(int(tz_total_per*4.5/100))" />
+	          					</t>
+	          					</td>
+	          				</tr>
+	          				<tr>
+	          					<td style='font-size:10px;border: 1px solid black;'>March</td>
+	          					<td style='font-size:10px;border: 1px solid black;'>
+	          					<t t-if="get_lines(data.get('ids'), 
+	          					data['form'].get('date_from'), data['form'].get('date_to')).get('3')">
+	          					<span t-esc="get_lines(data.get('ids'), 
+	          					data['form'].get('date_from'), data['form'].get('date_to')).get('3').get('p_gross')" t-options='{"widget": "float", "precision": 2}'/>
+	          					</t></td>
+	          					<td style='font-size:10px;border: 1px solid black;'>
+	          					<t t-if="get_lines(data.get('ids'), 
+	          					data['form'].get('date_from'), data['form'].get('date_to')).get('3')">
+								<t t-if="get_lines(data.get('ids'), 
+	          					data['form'].get('date_from'), data['form'].get('date_to')).get('3').get('c_gross')">	          					
+	          					<span t-esc="get_lines(data.get('ids'), 
+	          					data['form'].get('date_from'), data['form'].get('date_to')).get('3').get('c_gross')" t-options='{"widget": "float", "precision": 2}'/>
+	          					</t></t></td>
+	          					<td style='font-size:10px;border: 1px solid black;'>
+	          					<t t-if="get_lines(data.get('ids'), 
+	          					data['form'].get('date_from'), data['form'].get('date_to')).get('3')">
+	          					<span t-esc="get_lines(data.get('ids'), 
+	          					data['form'].get('date_from'), data['form'].get('date_to')).get('3').get('total_emt_tzs')" t-options='{"widget": "float", "precision": 2}'/>
+	          					</t>
+	          					</td>
+	          					<td style='font-size:10px;border: 1px solid black;'>
+	          					<t t-if="get_lines(data.get('ids'), 
+	          					data['form'].get('date_from'), data['form'].get('date_to')).get('3')">
+	          					<t t-set="tz_total_per" t-value="get_lines(data.get('ids'), 
+	          					data['form'].get('date_from'), data['form'].get('date_to')).get('3').get('total_emt_tzs')" />
+	          					 <t t-esc="'{0:,.2f}'.format(int(tz_total_per*4.5/100))" />
+	          					</t>
+	          					</td>
+	          				</tr>
+	          				<tr>
+	          					<td style='font-size:10px;border: 1px solid black;'>April</td>
+	          					<td style='font-size:10px;border: 1px solid black;'>
+	          					<t t-if="get_lines(data.get('ids'), 
+	          					data['form'].get('date_from'), data['form'].get('date_to')).get('4')">
+	          					<span t-esc="get_lines(data.get('ids'), 
+	          					data['form'].get('date_from'), data['form'].get('date_to')).get('4').get('p_gross')" t-options='{"widget": "float", "precision": 2}'/>
+	          					</t></td>
+	          					<td style='font-size:10px;border: 1px solid black;'>
+	          					<t t-if="get_lines(data.get('ids'), 
+	          					data['form'].get('date_from'), data['form'].get('date_to')).get('4')">
+	          					<t t-if="get_lines(data.get('ids'), 
+	          					data['form'].get('date_from'), data['form'].get('date_to')).get('4').get('c_gross')">
+	          					<span t-esc="get_lines(data.get('ids'), 
+	          					data['form'].get('date_from'), data['form'].get('date_to')).get('4').get('c_gross')" t-options='{"widget": "float", "precision": 2}'/>
+	          					</t></t></td>
+	          					<td style='font-size:10px;border: 1px solid black;'>
+	          					<t t-if="get_lines(data.get('ids'), 
+	          					data['form'].get('date_from'), data['form'].get('date_to')).get('4')">
+	          					<span t-esc="get_lines(data.get('ids'), 
+	          					data['form'].get('date_from'), data['form'].get('date_to')).get('4').get('total_emt_tzs')" t-options='{"widget": "float", "precision": 2}'/>
+	          					</t>
+	          					</td>
+	          					<td style='font-size:10px;border: 1px solid black;'>
+	          					<t t-if="get_lines(data.get('ids'), 
+	          					data['form'].get('date_from'), data['form'].get('date_to')).get('4')">
+	          					<t t-set="tz_total_per" t-value="get_lines(data.get('ids'), 
+	          					data['form'].get('date_from'), data['form'].get('date_to')).get('4').get('total_emt_tzs')" />
+	          					 <t t-esc="'{0:,.2f}'.format(int(tz_total_per*4.5/100))" />
+	          					</t>
+	          					</td>
+	          				</tr>
+	          				<tr>
+	          					<td style='font-size:10px;border: 1px solid black;'>May</td>
+	          					<td style='font-size:10px;border: 1px solid black;'>
+	          					<t t-if="get_lines(data.get('ids'), 
+	          					data['form'].get('date_from'), data['form'].get('date_to')).get('5')">
+	          					<span t-esc="get_lines(data.get('ids'), 
+	          					data['form'].get('date_from'), data['form'].get('date_to')).get('5').get('p_gross')" t-options='{"widget": "float", "precision": 2}'/>
+	          					</t></td>
+	          					<td style='font-size:10px;border: 1px solid black;'>
+	          					<t t-if="get_lines(data.get('ids'), 
+	          					data['form'].get('date_from'), data['form'].get('date_to')).get('5')">
+	          					<t t-if="get_lines(data.get('ids'), 
+	          					data['form'].get('date_from'), data['form'].get('date_to')).get('5').get('c_gross')">
+	          					<span t-esc="get_lines(data.get('ids'), 
+	          					data['form'].get('date_from'), data['form'].get('date_to')).get('5').get('c_gross')" t-options='{"widget": "float", "precision": 2}'/>
+	          					</t></t></td>
+	          					<td style='font-size:10px;border: 1px solid black;'>
+	          					<t t-if="get_lines(data.get('ids'), 
+	          					data['form'].get('date_from'), data['form'].get('date_to')).get('5')">
+	          					<span t-esc="get_lines(data.get('ids'), 
+	          					data['form'].get('date_from'), data['form'].get('date_to')).get('5').get('total_emt_tzs')" t-options='{"widget": "float", "precision": 2}'/>
+	          					</t>
+	          					</td>
+	          					<td style='font-size:10px;border: 1px solid black;'>
+	          					<t t-if="get_lines(data.get('ids'), 
+	          					data['form'].get('date_from'), data['form'].get('date_to')).get('5')">
+	          					<t t-set="tz_total_per" t-value="get_lines(data.get('ids'), 
+	          					data['form'].get('date_from'), data['form'].get('date_to')).get('5').get('total_emt_tzs')" />
+	          					 <t t-esc="'{0:,.2f}'.format(int(tz_total_per*4.5/100))" />
+	          					</t>
+	          					</td>
+	          				</tr>
+	          				<tr>
+	          					<td style='font-size:10px;border: 1px solid black;'>June</td>
+	          					<td style='font-size:10px;border: 1px solid black;'>
+	          					<t t-if="get_lines(data.get('ids'), 
+	          					data['form'].get('date_from'), data['form'].get('date_to')).get('6')">
+	          					<span t-esc="get_lines(data.get('ids'), 
+	          					data['form'].get('date_from'), data['form'].get('date_to')).get('6').get('p_gross')" t-options='{"widget": "float", "precision": 2}'/>
+	          					</t></td>
+	          					<td style='font-size:10px;border: 1px solid black;'>
+	          					<t t-if="get_lines(data.get('ids'), 
+	          					data['form'].get('date_from'), data['form'].get('date_to')).get('6')">
+	          					<t t-if="get_lines(data.get('ids'), 
+	          					data['form'].get('date_from'), data['form'].get('date_to')).get('6').get('c_gross')">
+	          					<span t-esc="get_lines(data.get('ids'), 
+	          					data['form'].get('date_from'), data['form'].get('date_to')).get('6').get('c_gross')" t-options='{"widget": "float", "precision": 2}'/>
+	          					</t></t></td>
+	          					<td style='font-size:10px;border: 1px solid black;'>
+	          					<t t-if="get_lines(data.get('ids'), 
+	          					data['form'].get('date_from'), data['form'].get('date_to')).get('6')">
+	          					<span t-esc="get_lines(data.get('ids'), 
+	          					data['form'].get('date_from'), data['form'].get('date_to')).get('6').get('total_emt_tzs')" t-options='{"widget": "float", "precision": 2}'/>
+	          					</t>
+	          					</td>
+	          					<td style='font-size:10px;border: 1px solid black;'>
+	          					<t t-if="get_lines(data.get('ids'), 
+	          					data['form'].get('date_from'), data['form'].get('date_to')).get('6')">
+	          					<t t-set="tz_total_per" t-value="get_lines(data.get('ids'), 
+	          					data['form'].get('date_from'), data['form'].get('date_to')).get('6').get('total_emt_tzs')" />
+	          					 <t t-esc="'{0:,.2f}'.format(int(tz_total_per*4.5/100))" />
+	          					</t>
+	          					</td>
+	          				</tr>
+	          				<tr>
+	          					<td style='font-size:10px;border: 1px solid black;'>July</td>
+	          					<td style='font-size:10px;border: 1px solid black;'>
+	          					<t t-if="get_lines(data.get('ids'),data['form'].get('date_from'), data['form'].get('date_to')).get('7')">
+	          					<span t-esc="get_lines(data.get('ids'), 
+	          					data['form'].get('date_from'), data['form'].get('date_to')).get('7').get('p_gross')" t-options='{"widget": "float", "precision": 2}'/>
+	          					</t></td>
+	          					<td style='border: 1px solid black;'>
+	          					<t t-if="get_lines(data.get('ids'), 
+	          					data['form'].get('date_from'), data['form'].get('date_to')).get('7')">
+	          					<span t-esc="get_lines(data.get('ids'),data['form'].get('date_from'), data['form'].get('date_to')).get('7').get('c_gross')" t-options='{"widget": "float", "precision": 2}'/>
+	          					</t></td>
+	          					<td style='font-size:10px;border: 1px solid black;'>
+	          					<t t-if="get_lines(data.get('ids'), 
+	          					data['form'].get('date_from'), data['form'].get('date_to')).get('7')">
+	          					<span t-esc="get_lines(data.get('ids'), data['form'].get('date_from'), data['form'].get('date_to')).get('7').get('total_emt_tzs')" t-options='{"widget": "float", "precision": 2}'/>
+	          					</t>
+	          					</td>
+	          					<td style='font-size:10px;border: 1px solid black;'>
+								<t t-if="get_lines(data.get('ids'), 
+	          					data['form'].get('date_from'), data['form'].get('date_to')).get('7')">
+	          					<t t-set="tz_total_per" t-value="get_lines(data.get('ids'), data['form'].get('date_from'), data['form'].get('date_to')).get('7').get('total_emt_tzs')" />
+	          					 <t t-esc="'{0:,.2f}'.format(int(tz_total_per*4.5/100))" />
+	          					</t>
+	          					</td>
+	          				</tr>
+	          				<tr>
+	          					<td style='font-size:10px;border: 1px solid black;'>August</td>
+	          					<td style='font-size:10px;border: 1px solid black;'>
+	          					<t t-if="get_lines(data.get('ids'), 
+	          					data['form'].get('date_from'), data['form'].get('date_to')).get('8')">
+	          					<span t-esc="get_lines(data.get('ids'), 
+	          					data['form'].get('date_from'), data['form'].get('date_to')).get('8').get('p_gross')" t-options='{"widget": "float", "precision": 2}'/>
+	          					</t></td>
+	          					<td style='font-size:10px;border: 1px solid black;'>
+	          					<t t-if="get_lines(data.get('ids'), 
+	          					data['form'].get('date_from'), data['form'].get('date_to')).get('8')">
+	          					<span t-esc="get_lines(data.get('ids'),data['form'].get('date_from'), data['form'].get('date_to')).get('8').get('c_gross')" t-options='{"widget": "float", "precision": 2}'/>
+	          					</t></td>
+	          					<td style='font-size:10px;border: 1px solid black;'>
+	          					<t t-if="get_lines(data.get('ids'), 
+	          					data['form'].get('date_from'), data['form'].get('date_to')).get('8')">
+	          					<span t-esc="get_lines(data.get('ids'), data['form'].get('date_from'), data['form'].get('date_to')).get('8').get('total_emt_tzs')" t-options='{"widget": "float", "precision": 2}'/>
+	          					</t>
+	          					</td>
+	          					<td style='font-size:10px;border: 1px solid black;'>
+	          					<t t-if="get_lines(data.get('ids'), 
+	          					data['form'].get('date_from'), data['form'].get('date_to')).get('8')">
+	          					<t t-set="tz_total_per" t-value="get_lines(data.get('ids'), data['form'].get('date_from'), data['form'].get('date_to')).get('8').get('total_emt_tzs')" />
+	          					 <t t-esc="'{0:,.2f}'.format(int(tz_total_per*4.5/100))" />
+	          					</t>
+	          					</td>
+	          				</tr>
+	          				<tr>
+	          					<td style='font-size:10px;border: 1px solid black;'>September</td>
+	          					<td style='font-size:10px;border: 1px solid black;'>
+	          					<t t-if="get_lines(data.get('ids'), 
+	          					data['form'].get('date_from'), data['form'].get('date_to')).get('9')">
+	          					<span t-esc="get_lines(data.get('ids'), 
+	          					data['form'].get('date_from'), data['form'].get('date_to')).get('9').get('p_gross')" t-options='{"widget": "float", "precision": 2}'/>
+	          					</t></td>
+	          					<td style='font-size:10px;border: 1px solid black;'>
+	          					<t t-if="get_lines(data.get('ids'), 
+	          					data['form'].get('date_from'), data['form'].get('date_to')).get('9')">
+	          					<span t-esc="get_lines(data.get('ids'), data['form'].get('date_from'), data['form'].get('date_to')).get('9').get('c_gross')" t-options='{"widget": "float", "precision": 2}'/>
+	          					</t></td>
+	          					<td style='font-size:10px;border: 1px solid black;'>
+	          					<t t-if="get_lines(data.get('ids'), 
+	          					data['form'].get('date_from'), data['form'].get('date_to')).get('9')">
+	          					<span t-esc="get_lines(data.get('ids'), data['form'].get('date_from'), data['form'].get('date_to')).get('9').get('total_emt_tzs')" t-options='{"widget": "float", "precision": 2}'/>
+	          					</t>
+	          					</td>
+	          					<td style='font-size:10px;border: 1px solid black;'>
+	          					<t t-if="get_lines(data.get('ids'), 
+	          					data['form'].get('date_from'), data['form'].get('date_to')).get('9')">
+	          					<t t-set="tz_total_per" t-value="get_lines(data.get('ids'), data['form'].get('date_from'), data['form'].get('date_to')).get('9').get('total_emt_tzs')" />
+	          					 <t t-esc="'{0:,.2f}'.format(int(tz_total_per*4.5/100))" />
+	          					</t>
+	          					</td>
+	          				</tr>
+	          				<tr>
+	          					<td style='font-size:10px;border: 1px solid black;'>October</td>
+	          					<td style='font-size:10px;border: 1px solid black;'>
+	          					<t t-if="get_lines(data.get('ids'), 
+	          					data['form'].get('date_from'), data['form'].get('date_to')).get('10')">
+	          					<span t-esc="get_lines(data.get('ids'), 
+	          					data['form'].get('date_from'), data['form'].get('date_to')).get('10').get('p_gross')" t-options='{"widget": "float", "precision": 2}'/>
+	          					</t></td>
+	          					<td style='font-size:10px;border: 1px solid black;'>
+	          					<t t-if="get_lines(data.get('ids'), 
+	          					data['form'].get('date_from'), data['form'].get('date_to')).get('10')">
+	          					<span t-esc="get_lines(data.get('ids'), data['form'].get('date_from'), data['form'].get('date_to')).get('10').get('c_gross')" t-options='{"widget": "float", "precision": 2}'/>
+	          					</t></td>
+	          					<td style='font-size:10px;border: 1px solid black;'>
+	          					<t t-if="get_lines(data.get('ids'), data['form'].get('date_from'), data['form'].get('date_to')).get('10')">
+	          					<span t-esc="get_lines(data.get('ids'), data['form'].get('date_from'), data['form'].get('date_to')).get('10').get('total_emt_tzs')" t-options='{"widget": "float", "precision": 2}'/>
+	          					</t>
+	          					</td>
+	          					<td style='font-size:10px;border: 1px solid black;'>
+	          					<t t-if="get_lines(data.get('ids'), data['form'].get('date_from'), data['form'].get('date_to')).get('10')">
+	          					<t t-set="tz_total_per" t-value="get_lines(data.get('ids'), 
+	          					data['form'].get('date_from'), data['form'].get('date_to')).get('10').get('total_emt_tzs')" />
+	          					 <t t-esc="'{0:,.2f}'.format(int(tz_total_per*4.5/100))" />
+	          					</t>
+	          					</td>
+	          				</tr>
+	          				<tr>
+	          					<td style='font-size:10px;border: 1px solid black;'>November</td>
+	          					<td style='font-size:10px;border: 1px solid black;'>
+	          					<t t-if="get_lines(data.get('ids'), 
+	          					data['form'].get('date_from'), data['form'].get('date_to')).get('11')">
+	          					<span t-esc="get_lines(data.get('ids'), data['form'].get('date_from'), data['form'].get('date_to')).get('11').get('p_gross')" t-options='{"widget": "float", "precision": 2}'/>
+	          					</t></td>
+	          					<td style='border: 1px solid black;'>
+	          					<t t-if="get_lines(data.get('ids'), data['form'].get('date_from'), data['form'].get('date_to')).get('11')">
+	          					<span t-esc="get_lines(data.get('ids'), data['form'].get('date_from'), data['form'].get('date_to')).get('11').get('c_gross')" t-options='{"widget": "float", "precision": 2}'/>
+	          					</t></td>
+	          					<td style='font-size:10px;border: 1px solid black;'>
+	          					<t t-if="get_lines(data.get('ids'), data['form'].get('date_from'), data['form'].get('date_to')).get('11')">
+	          					<span t-esc="get_lines(data.get('ids'), data['form'].get('date_from'), data['form'].get('date_to')).get('11').get('total_emt_tzs')" t-options='{"widget": "float", "precision": 2}'/>
+	          					</t>
+	          					</td>
+	          					<td style='font-size:10px;border: 1px solid black;'>
+	          					<t t-if="get_lines(data.get('ids'), 
+	          					data['form'].get('date_from'), data['form'].get('date_to')).get('11')">
+	          					<t t-set="tz_total_per" t-value="get_lines(data.get('ids'), 
+	          					data['form'].get('date_from'), data['form'].get('date_to')).get('11').get('total_emt_tzs')" />
+	          					 <t t-esc="'{0:,.2f}'.format(int(tz_total_per*4.5/100))" />
+	          					</t>
+	          					</td>
+	          				</tr>
+	          				<tr>
+	          					<td style='font-size:10px;border: 1px solid black;'>December</td>
+	          					<td style='font-size:10px;border: 1px solid black;'>
+	          					<t t-if="get_lines(data.get('ids'), data['form'].get('date_from'), data['form'].get('date_to')).get('12')">
+	          					<span t-esc="get_lines(data.get('ids'), 
+	          					data['form'].get('date_from'), data['form'].get('date_to')).get('12').get('p_gross')" t-options='{"widget": "float", "precision": 2}'/>
+	          					</t></td>
+	          					<td style='font-size:10px;border: 1px solid black;'>
+	          					<t t-if="get_lines(data.get('ids'), data['form'].get('date_from'), data['form'].get('date_to')).get('12')">
+	          					<span t-esc="get_lines(data.get('ids'), data['form'].get('date_from'), data['form'].get('date_to')).get('12').get('c_gross')" t-options='{"widget": "float", "precision": 2}'/>
+	          					</t></td>
+	          					<td style='font-size:10px;border: 1px solid black;'>
+	          					<t t-if="get_lines(data.get('ids'), data['form'].get('date_from'), data['form'].get('date_to')).get('12')">
+	          					<span t-esc="get_lines(data.get('ids'),data['form'].get('date_from'), data['form'].get('date_to')).get('12').get('total_emt_tzs')" t-options='{"widget": "float", "precision": 2}'/>
+	          					</t>
+	          					</td>
+	          					<td style='font-size:10px;border: 1px solid black;'>
+	          					<t t-if="get_lines(data.get('ids'), data['form'].get('date_from'), data['form'].get('date_to')).get('12')">
+	          					<t t-set="tz_total_per" t-value="get_lines(data.get('ids'), data['form'].get('date_from'), data['form'].get('date_to')).get('12').get('total_emt_tzs')" />
+	          					 <t t-esc="'{0:,.2f}'.format(int(tz_total_per*4.5/100))" />
+	          					</t>
+	          					</td>
+	          				</tr>
+	          				<tr>
+	          					<td style='font-size:10px;border: 1px solid black;'>Total</td>
+	          					<td style='font-size:10px;border: 1px solid black;'>
+	          					<t t-if="get_lines_total(data.get('ids'), 
+	          					data['form'].get('date_from'), data['form'].get('date_to'))">
+	          					<span t-esc="get_lines_total(data.get('ids'), data['form'].get('date_from'), data['form'].get('date_to')).get('p_gross')" t-options='{"widget": "float", "precision": 2}'/>
+	          					</t>
+	          					</td>
+	          					<td style='font-size:10px;border: 1px solid black;'>
+	          					<t t-if="get_lines_total(data.get('ids'), data['form'].get('date_from'), data['form'].get('date_to'))">
+	          					<span t-esc="get_lines_total(data.get('ids'), data['form'].get('date_from'), data['form'].get('date_to')).get('c_gross')" t-options='{"widget": "float", "precision": 2}'/>
+	          					</t>
+	          					</td>
+	          					<td style='font-size:10px;border: 1px solid black;'>
+	          					<t t-if="get_lines_total(data.get('ids'), 
+	          					data['form'].get('date_from'), data['form'].get('date_to'))">
+	          					<span t-esc="get_lines_total(data.get('ids'), 
+	          					data['form'].get('date_from'), data['form'].get('date_to')).get('total_emt_tzs')" t-options='{"widget": "float", "precision": 2}'/>
+	          					</t>
+	          					</td>
+	          					<td style='font-size:10px;border: 1px solid black;'>
+	          					<t t-if="get_lines_total(data.get('ids'), data['form'].get('date_from'), data['form'].get('date_to'))">
+	          					<span t-esc="get_lines_total(data.get('ids'), data['form'].get('date_from'), data['form'].get('date_to')).get('tzs_per')" t-options='{"widget": "float", "precision": 2}'/>
+	          					</t>
+	          					</td>
+	          				</tr>
+	          			</table>
+	          			<p style="page-break-after:always;">   </p>
+	          			<table width="100%" style='font-size:12px;'>
+	          				<br/>
+	          				<tr>
+	          					<td>
+	          						The amount of gross emoluments paid during the period from (please tick the appropriate box)
+	          					</td>
+	          				</tr>
+	          				<tr>
+	          					<td>
+	          						<div  style='display:inline-block;width: 25px;height: 20px;border: 1px solid black;'>
+	          							<input t-if="data.get('year') and data.get('year')=='half'" type="checkbox" id="oe_import_tracking" checked="checked"/>
+	          						</div>
+	          					1st January to 30th June
+	          					</td>
+	          				</tr>
+	          				<tr>
+	          					<td>
+	          						<div style='display:inline-block;width: 20px;height: 20px;border: 1px solid black;'>
+          							    <input t-if="data.get('year') and data.get('year')=='full'" type="checkbox" id="oe_import_tracking" checked="checked"/>
+	          						</div>
+	          					1st July to 31st  December
+	          					</td>
+	          				</tr>
+	          				<tr>
+	          					<td>added up to TZS………
+	          					<div style='display:inline-block;width:120px;height: 20px;border: 1px solid black;'></div>
+	          					……… and 6% thereof is
+	          					<div style='display:inline-block;width:250px;height: 20px;border: 1px solid black;'></div></td>
+	          				</tr>
+	          			</table>
+	          			<br/><br/>
+	          			<table width="100%" style='font-size:12px;'>
+	          				<tr>
+	          					<th>DECLARATION</th>
+	          				</tr>
+	          				<tr>
+	          					<td>I certify that the particulars entered on the form SDL already submitted monthly for the period indicated above are correct.</td>
+	          				</tr>
+	          				<tr>
+	          					<td>Name of the Employer/Paying Officer</td>
+	          				</tr>
+	          				<tr>
+	          					<td style="border-bottom:1px solid"></td>
+	          				</tr>
+	          			</table>
+	          			<table width="100%" style='font-size:12px;'>
+	          				<tr>
+	          					<td width="25%">Title:</td>
+	          					<td width="35%">Mr.
+	          						 <div style='display:inline-block;width: 25px;height: 20px;border: 1px solid black;'>
+	          						 	<input t-if="data.get('male')" type="checkbox" id="oe_import_tracking" checked="checked"/>
+	          						 </div>
+	          					Mrs. <div style='display:inline-block;width: 25px;height: 20px;border: 1px solid black;'>
+	          						
+	          					</div>
+	          					Ms. <div style='display:inline-block;width: 25px;height: 20px;border: 1px solid black;'>
+	          					<input t-if="data.get('female')" type="checkbox" id="oe_import_tracking" checked="checked"/>
+	          					</div></td>
+	          					<td width="30%"></td>
+	          				</tr>
+	          				<tr>
+	          					<td><div style='display:inline-block;width: 150px;height: 20px;border: 1px solid black;'></div></td>
+	          					<td><div style='display:inline-block;width: 150px;height: 20px;border: 1px solid black;'></div></td>
+	          					<td><div style='display:inline-block;width: 150px;height: 20px;border: 1px solid black;'></div></td>
+	          				</tr>
+	          				<tr>
+	          					<td colspan="2">Signature and rubber stamp of the Employer/Paying Officer</td>
+	          				</tr>
+	          				<br/>
+	          				<tr> <td  colspan="2" style="border-bottom:1px solid"></td> </tr>
+	          				</table>
+	          				<table style='font-size:12px;'>
+	          				<tr>
+	          					<td></td>
+	          					<td>Day</td>
+	          					<td></td>
+	          					<td>Month</td>
+	          					<td></td>
+	          					<td>Year</td>
+	          				</tr>
+	          				<tr>
+	          					<td>Date:</td>
+	          					<td><div style='display:inline-block;width: 25px;height: 20px;border: 1px solid black;'>
+	          						<span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d')[0]"/>
+	          					</div>
+	          					<div style='display:inline-block;width: 25px;height: 20px;border: 1px solid black;'>
+	          						<span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d')[1]"/>
+	          					</div>
+	          					</td>
+	          					<td></td>
+	          					<td><div style='display:inline-block;width: 25px;height: 20px;border: 1px solid black;'>
+	          						<span t-esc="context_timestamp(datetime.datetime.now()).strftime('%m')[0]"/>
+	          					</div>
+	          					<div style='display:inline-block;width: 25px;height: 20px;border: 1px solid black;'>
+	          						<span t-esc="context_timestamp(datetime.datetime.now()).strftime('%m')[1]"/>
+	          					</div></td>
+	          					<td></td>
+	          					<td><div style='display:inline-block;width: 25px;height: 20px;border: 1px solid black;'>
+	          						<span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y')[0]"/>
+	          					</div>
+	          					<div style='display:inline-block;width: 25px;height: 20px;border: 1px solid black;'>
+	          						<span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y')[1]"/>
+	          					</div>
+	          					<div style='display:inline-block;width: 25px;height: 20px;border: 1px solid black;'>
+	          						<span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y')[2]"/>
+	          					</div>
+	          					<div style='display:inline-block;width: 25px;height: 20px;border: 1px solid black;'>
+	          						<span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y')[3]"/>
+	          					</div></td>
+	          				</tr>
+	          			</table>
+            </t>
+         </t>
+         </t>
+   </t>
+ </template>
+</odoo>

@@ -1,0 +1,52 @@
+<odoo>
+	<record id="view_custom_attendance_form" model="ir.ui.view">
+        <field name="name">custom.attendance.transaction.form</field>
+        <field name="model">custom.attendance</field>
+        <field name="arch" type="xml">
+            <form string="Employee Attendance">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="emp_name" />
+                            <field name="emp_id" />
+                        </group>
+                        <group>
+                            <field name="no_of_days_worked"/>
+                            <field name="date"/>
+
+                        </group>
+
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_asa_custom_attendance_tree" model="ir.ui.view">
+        <field name="name">custom.attendance.tree</field>
+        <field name="model">custom.attendance</field>
+        <field name="arch" type="xml">
+            <tree string="Custom Attendance">
+                <field name="emp_name" />
+                <field name="emp_id" />
+                <field name="date"/>
+                <field name="no_of_days_worked"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_hr_custom_attendance" model="ir.actions.act_window">
+        <field name="name">Attendance Datas</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">custom.attendance</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem id="custom_attendance_types_main_menu" name="Attendance Custom"
+    	parent="hr.menu_hr_root" />
+
+    <menuitem id="custom_attendance_main_menu" name="Upload Attendance" parent="custom_attendance_types_main_menu" action="action_hr_custom_attendance"/>
+
+<!--     
+    <menuitem name="Reports" id="menu_hr_payslip_report_menu_custom" parent="hr_payroll_community.menu_hr_payroll_community_root"/>
+    <menuitem name="Monthy Reports" id="menu_hr_payslip_report_monthly_menu" parent="menu_hr_payslip_report_menu_custom"/> -->
+</odoo>
