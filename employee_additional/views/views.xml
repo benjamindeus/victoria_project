@@ -63,8 +63,6 @@
         </field>
     </record>
 
-
-
     <menuitem name="All Reports" id="menu_hr_payslip_report_menu_custom" parent="hr_payroll_community.menu_hr_payroll_community_root"/>
     <menuitem name="Monthy Reports" id="menu_hr_payslip_report_monthly_menu" parent="menu_hr_payslip_report_menu_custom"/>
 
