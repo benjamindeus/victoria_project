@@ -77,3 +77,30 @@ class HrPayslip(models.Model):
                 line.loan_line_id.paid = True
                 line.loan_line_id.loan_id._compute_loan_amount()
         return super(HrPayslip, self).action_payslip_done()
+    
+        # ben added this
+    def _loan_payslip_total(self):
+        loan_amount = 0.0
+        loan_id = []
+        if (not self.employee_id) or (not self.date_from) or (not self.date_to):
+            return
+        for rec in self:
+            lon_obj = self.env['hr.loan'].search([('employee_id', '=', rec.employee_id.id), ('state', '=', 'approve')])
+            for loan in lon_obj:
+                for loan_line in loan.loan_lines:
+                    # if rec.date_from <= loan_line.date <= rec.date_to and not loan_line.paid:
+                    if rec.date_from <= loan_line.date <= rec.date_to and loan_line.paid_by != "cash":
+                        loan_amount += loan_line.amount
+                        loan_id.append(loan_line.id)
+                        print(loan_id)
+            if loan_id and loan_amount > 0.0:
+                rec.loan_total = loan_amount
+                rec.loan_line_ids_ben = loan_id
+            else:
+                rec.loan_total = 0.0
+                rec.loan_line_ids_ben = []
+
+    # ,store=True i added this
+    loan_total = fields.Float(string='Loan Total', default=0.0, compute='_loan_payslip_total', )
+    loan_line_ids_ben = fields.Many2many('hr.loan.line', string="Many loans", help="Many Loan installment",
+                                         compute='_loan_payslip_total', )

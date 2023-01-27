@@ -23,17 +23,18 @@ result =payslip.other_allowances + payslip.notice_payment + payslip.other_adjace
 	</record> -->
 
 
-	<!-- <record id="hr_rule_othet_advance" model="hr.salary.rule">
-	    <field name="name">Advance</field>
-	    <field name="sequence" eval="28"/>
+	    <record id="hr_rule_othet_advance" model="hr.salary.rule">
+	    <field name="name">Recovery Deduction</field>
+	    <field name="sequence" eval="100"/>
 	    <field name="code">Adm</field>
-	    <field name="category_id" ref="hr_payroll_community.DED"/>
+		<field name="category_id" ref="hr_payroll_community.DED"/>
 	    <field name="condition_select">none</field>
 	    <field name="amount_select">code</field>
 	    <field name="amount_python_compute">
-result =payslip.advances_adv + payslip.other_deduction + payslip.other_adjacement_deduction + payslip.penalt_total
+result = payslip.penalt_total
 	    </field>
-	</record> -->
+	</record>
+	
 
 
 	
@@ -180,7 +181,11 @@ else:
 	    <field name="condition_select">none</field>
 	    <field name="amount_select">code</field>
 	    <field name="amount_python_compute">
-result = BASIC * 0.02
+if contract.employee_id.cowtu == True:
+	result = BASIC * 0.02
+else:
+	result = 0.0
+
 		</field>
 	</record>
 
@@ -192,7 +197,10 @@ result = BASIC * 0.02
 	    <field name="condition_select">none</field>
 	    <field name="amount_select">code</field>
 	    <field name="amount_python_compute">
-result = BASIC * 0.02
+if contract.employee_id.tasiwu == True:
+	result = BASIC * 0.02
+else:
+	result=0.0
 		</field>
 	</record>
 

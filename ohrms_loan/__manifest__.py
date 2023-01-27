@@ -42,6 +42,7 @@
         'data/salary_rule_loan.xml',
         'views/hr_loan.xml',
         'views/hr_payroll.xml',
+        'wizard/cash_payment.xml',
     ],
     'images': ['static/description/banner.png'],
     'license': 'AGPL-3',

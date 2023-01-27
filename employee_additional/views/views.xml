@@ -16,6 +16,8 @@
             <field name="work_email" position="after">
                 <field name="has_nhif"/>
                 <field name="form_4_number"/>
+                <field name="tasiwu"/>
+                <field name="cowtu"/>
                 <!-- <field name="initial" readonly="1" force_save="1"/> -->
             </field>
 
@@ -59,10 +61,62 @@
         <field name="arch" type="xml">
             <field name="vat" position="after">
                 <field name="tin" />
+                <!-- <field name="prepare_by" widget="many2many_tags"/>
+                <field name="certified_by" widget="many2many_tags"/>
+                <field name="approved_by" widget="many2many_tags"/> -->
+                <!-- <field name="usd_rate"/> -->
             </field>
         </field>
     </record>
 
+    <!-- added changes  -->
+    <!-- <record id="res_company_view_form_payroll_validation" model="ir.ui.view">
+        <field name="name">res.company.view.form.payroll_validation</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='email']" position="after">
+                <group>
+                    <field name="prepare_by" invisible="0"/>
+                    <field name="certified_by" invisible="0"/>
+                    <field name="approved_by" invisible="0"/>
+                </group>
+                
+            </xpath>
+        </field>
+    </record> -->
+
+    <record id="hr_payslip_run_form_approvals" model="ir.ui.view">
+        <field name="name">hr.payslip.run.form</field>
+        <field name="model">hr.payslip.run</field>
+        <field name="inherit_id" ref="hr_payroll_community.hr_payslip_run_form"/>
+        <field name="arch" type="xml">
+            <!-- ben added this fo used -->
+<!--            <field name="state" position="replace">-->
+<!--                <field name="state" widget="statusbar" statusbar_visible='draft,prepare,certified,approved,close' clickable="1"/>-->
+<!--            </field>-->
+                        <!-- ben added this fo used -->
+
+            <xpath expr="//button[@name='%(hr_payroll_community.action_hr_payslip_by_employees)d']" position="replace">
+                  <button name="%(hr_payroll_community.action_hr_payslip_by_employees)d" type="action" states="draft" string="Generate Payslips" class="oe_highlight"/>
+<!--                  <button name="%(hr_payroll_community.action_hr_payslip_by_employees)d" type="action" states="draft,prepare,certified,approved" string="Generate Payslips" class="oe_highlight"/>-->
+            </xpath>
+            <xpath expr="//button[@name='close_payslip_run']" position="replace">
+                  <button name="close_payslip_run" type="object" string="Close" states="approved" class="oe_highlight"/>
+<!--                  <button name="close_payslip_run" type="object" string="Close" states="draft,prepare,certified,approved" class="oe_highlight"/>-->
+            </xpath>
+
+            <field name="payroll_date" position="after">
+                <group>
+                    <field name="p_user_id" readonly="1"/>
+                    <field name="c_user_id" readonly="1"/>
+                    <field name="a_user_id" readonly="1"/>
+                </group> 
+            </field>
+        </field>
+    </record>
+
+   
     <menuitem name="All Reports" id="menu_hr_payslip_report_menu_custom" parent="hr_payroll_community.menu_hr_payroll_community_root"/>
     <menuitem name="Monthy Reports" id="menu_hr_payslip_report_monthly_menu" parent="menu_hr_payslip_report_menu_custom"/>
 

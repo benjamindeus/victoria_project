@@ -369,12 +369,13 @@
         <field name="model">hr.payslip.run</field>
         <field name="arch" type="xml">
             <form string="Payslips Batches">
-            <header>
-                <button name="close_payslip_run" type="object" string="Close" states="draft" class="oe_highlight"/>
-                <button name="%(action_hr_payslip_by_employees)d" type="action" states="draft" string="Generate Payslips" class="oe_highlight"/>
-                <button string="Set to Draft" name="draft_payslip_run" type="object" states="close" />
-                <field name="state" widget="statusbar"/>
-            </header>
+                <header>
+                    <button name="close_payslip_run" type="object" string="Close" states="draft" class="oe_highlight"/>
+                    <button name="%(action_hr_payslip_by_employees)d" type="action" states="draft" string="Generate Payslips" class="oe_highlight"/>
+                    <button string="Set to Draft" name="draft_payslip_run" type="object" states="prepare,certified" class="btn-danger"/>
+                    <field name="state" widget="statusbar" statusbar_visible='draft,prepare,certified,approved' clickable="0"/>
+    
+                </header>
             <sheet>
                 <label for="name" class="oe_edit_only"/>
                 <h1>
@@ -389,6 +390,7 @@
                 </group>
                 <separator string="Payslips"/>
                 <field name="slip_ids"/>
+                <field name="payroll_date"/>
             </sheet>
             </form>
         </field>

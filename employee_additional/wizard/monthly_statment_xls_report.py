@@ -87,69 +87,69 @@ class MontlyStatmentXlsReport(models.TransientModel):
                 'A7', "SR/NO." or '', bold_center)
         worksheet.write(
                 'B7', "EMPLOYEE NAME " or '', bold_center)
-        # worksheet.write(
-        #         'C7', "PAY ROLL NO." or '', bold_center)
         worksheet.write(
-                'C7', "BRANCH NAME " or '', bold_center)
+                'C7', "SLIP NO." or '', bold_center)
+        # worksheet.write(
+        #         'C7', "BRANCH NAME " or '', bold_center)
         worksheet.write(
                 'D7', "DESIGNATION" or '', bold_center)
         worksheet.write(
                 'E7', "EMPLOYEE ID" or '', bold_center)
         worksheet.write(
-                'F7', "BASIC PAY" or '', bold_center)
-        worksheet.write(
-                'G7', "LIVING ALLOWANCE" or '', bold_center)
-        worksheet.write(
-                'H7', "CONVEYANCE " or '', bold_center)
-        worksheet.write(
-                'I7', "MEDICAL" or '', bold_center)
-        worksheet.write(
-                'J7', "FOOD ALLOWANCE" or '', bold_center)
-        worksheet.write(
-                'K7', "NHIF ALLOWANCE" or '', bold_center)
-        worksheet.write(
-                'L7', "BENEFET IN KIND" or '', bold_center)
-        worksheet.write(
-                'M7', "OVERTIME" or '', bold_center)
+                'F7', "GROSS PAY" or '', bold_center)
+        # worksheet.write(
+        #         'G7', "LIVING ALLOWANCE" or '', bold_center)
+        # worksheet.write(
+        #         'H7', "CONVEYANCE " or '', bold_center)
+        # worksheet.write(
+        #         'I7', "MEDICAL" or '', bold_center)
+        # worksheet.write(
+        #         'J7', "FOOD ALLOWANCE" or '', bold_center)
+        # worksheet.write(
+        #         'K7', "NHIF ALLOWANCE" or '', bold_center)
+        # worksheet.write(
+        #         'L7', "BENEFET IN KIND" or '', bold_center)
+        # worksheet.write(
+        #         'M7', "OVERTIME" or '', bold_center)
 
         worksheet.write(
-                'N7', "LEAVE ALLOWANCE." or '', bold_center)
+                'G7', "LEAVE ALLOWANCE." or '', bold_center)
+        # `worksheet.write(
+        #         'H7', "GROSS PAY " or '', bold_center)`
         worksheet.write(
-                'O7', "GROSS PAY " or '', bold_center)
+                'H7', "NSSF EMPLOYER" or '', bold_center)
         worksheet.write(
-                'P7', "NSSF EMPLOYER" or '', bold_center)
+                'I7', "TAXABLE AMOUNT" or '', bold_center)
         worksheet.write(
-                'Q7', "TAXABLE AMOUNT" or '', bold_center)
+                'J7', "P.A.Y.E" or '', bold_center)
         worksheet.write(
-                'R7', "P.A.Y.E" or '', bold_center)
+                'K7', "NSSF EMPLOYEE" or '', bold_center)
         worksheet.write(
-                'S7', "NSSF EMPLOYEE" or '', bold_center)
+                'L7', "NHIF EMPLOYEE" or '', bold_center)
         worksheet.write(
-                'T7', "NHIF EMPLOYEE" or '', bold_center)
+                'M7', "HELSB" or '', bold_center)
         worksheet.write(
-                'U7', "HELSB" or '', bold_center)
+                'N7', "WCF" or '', bold_center)
         worksheet.write(
-                'V7', "WCF" or '', bold_center)
+                'O7', "SDL" or '', bold_center)
         worksheet.write(
-                'W7', "SDL" or '', bold_center)
+                'P7', "TOTAL DEDUCTION" or '', bold_center)
         worksheet.write(
-                'X7', "TOTAL DEDUCTION" or '', bold_center)
-        worksheet.write(
-                'Y7', "TOTAL NSSF" or '', bold_center)
+                'Q7', "TOTAL NSSF" or '', bold_center)
 
         worksheet.write(
-                'Z7', "TOTAL NHIF." or '', bold_center)
+                'R7', "TOTAL NHIF." or '', bold_center)
 
         worksheet.write(
-                'AA7', "STAFF LOAN " or '', bold_center)
+                'S7', "STAFF LOAN " or '', bold_center)
 
         worksheet.write(
-                'AB7', "SALARY ADVANCE " or '', bold_center)
+                'T7', "SALARY ADVANCE " or '', bold_center)
 
         worksheet.write(
-                'AC7', "NET SALARY " or '', bold_center)
-        worksheet.write(
-                'AD7', "ZSSF TOTAL" or '', bold_center)
+                'U7', "NET SALARY " or '', bold_center)
+        # worksheet.write(
+        #         'AD7', "ZSSF TOTAL" or '', bold_center)
 
         sr_no = 0
         row = 7
@@ -346,79 +346,79 @@ class MontlyStatmentXlsReport(models.TransientModel):
               
                  
 
-#                 
+#           VALUES OF THE ENTRIES
             sr_no += 1
             worksheet.write(
                 row, 0,  sr_no or '', content)
             worksheet.write(
                 row, 1, rec.employee_id.name or '', bold_left)
-            # worksheet.write(
-            #     row, 2, rec.number, bold_left)
             worksheet.write(
-                row, 2,"ben", bold_left)
+                row, 2, rec.number, bold_left)
+            # worksheet.write(
+            #     row, 2,"ben", bold_left)
             worksheet.write(
                 row, 3, rec.contract_id.job_id.name, bold_left)
             worksheet.write(
                 row, 4, rec.employee_id.empl_id, bold_left)
             worksheet.write(
-                row, 5, round(basic,aproximate_place), num_fmt)
+                row, 5, round(gross,aproximate_place), num_fmt)
+
+            # worksheet.write(
+            #     row, 6, round(livng_,aproximate_place), num_fmt)
+
+            # worksheet.write(
+            #     row, 7, round(cna_,aproximate_place), num_fmt)
+            # worksheet.write(
+            #     row, 8, round(mda_,aproximate_place), num_fmt)
+            # worksheet.write(
+            #     row, 9, round(foo_,aproximate_place), num_fmt)
+            # worksheet.write(
+            #     row, 10, round(nhif_all,aproximate_place), num_fmt)
+            # worksheet.write(
+            #     row, 11, round(ben_,aproximate_place), num_fmt)
+            # worksheet.write(
+            #     row, 12, over_, num_fmt)
+            worksheet.write(
+                row, 6, round(leav_,aproximate_place), num_fmt)
+            # worksheet.write(
+            #     row, 7, round(gross,aproximate_place), num_fmt)
+            worksheet.write(
+                row, 7, round(NSSFEMPLOYEER_,aproximate_place), num_fmt)
+            worksheet.write(
+                row, 8, round(txb_,aproximate_place), num_fmt)
+            worksheet.write(
+                row, 9, round(payee_,aproximate_place), num_fmt)
+            worksheet.write(
+                row, 10, round(NSSFEMPLOYEE_,aproximate_place), num_fmt)
+            worksheet.write(
+                row, 11, round(NHIFEMPLOYEE_,aproximate_place), num_fmt)
+            worksheet.write(
+                row, 12, round(helsb_,aproximate_place), num_fmt)
 
             worksheet.write(
-                row, 6, round(livng_,aproximate_place), num_fmt)
-
+                row, 13, round(wcf_,aproximate_place), num_fmt)
             worksheet.write(
-                row, 7, round(cna_,aproximate_place), num_fmt)
+                row, 14, round(sdl_,aproximate_place), num_fmt)
             worksheet.write(
-                row, 8, round(mda_,aproximate_place), num_fmt)
+                row, 15, round(ded_,aproximate_place), num_fmt)
             worksheet.write(
-                row, 9, round(foo_,aproximate_place), num_fmt)
+                row, 16, round(tnssf_,aproximate_place), num_fmt)
             worksheet.write(
-                row, 10, round(nhif_all,aproximate_place), num_fmt)
-            worksheet.write(
-                row, 11, round(ben_,aproximate_place), num_fmt)
-            worksheet.write(
-                row, 12, over_, num_fmt)
-            worksheet.write(
-                row, 13, round(leav_,aproximate_place), num_fmt)
-            worksheet.write(
-                row, 14, round(gross,aproximate_place), num_fmt)
-            worksheet.write(
-                row, 15, round(NSSFEMPLOYEER_,aproximate_place), num_fmt)
-            worksheet.write(
-                row, 16, round(txb_,aproximate_place), num_fmt)
-            worksheet.write(
-                row, 17, round(payee_,aproximate_place), num_fmt)
-            worksheet.write(
-                row, 18, round(NSSFEMPLOYEE_,aproximate_place), num_fmt)
-            worksheet.write(
-                row, 19, round(NHIFEMPLOYEE_,aproximate_place), num_fmt)
-            worksheet.write(
-                row, 20, round(helsb_,aproximate_place), num_fmt)
-
-            worksheet.write(
-                row, 21, round(wcf_,aproximate_place), num_fmt)
-            worksheet.write(
-                row, 22, round(sdl_,aproximate_place), num_fmt)
-            worksheet.write(
-                row, 23, round(ded_,aproximate_place), num_fmt)
-            worksheet.write(
-                row, 24, round(tnssf_,aproximate_place), num_fmt)
-            worksheet.write(
-                row, 25, round(tnhif_,aproximate_place), num_fmt)
+                row, 17, round(tnhif_,aproximate_place), num_fmt)
 
         # benjamin added this
             worksheet.write(
-                row, 26, round(loan_,aproximate_place), num_fmt)
+                row, 18, round(loan_,aproximate_place), num_fmt)
 
             worksheet.write(
-                row, 27, round(_adv_salary,aproximate_place), num_fmt)
+                row, 19, round(_adv_salary,aproximate_place), num_fmt)
 
             worksheet.write(
-                row, 28, round(net_,aproximate_place), num_fmt)
+                row, 20, round(net_,aproximate_place), num_fmt)
 
 
-            worksheet.write(
-                row, 29, round(tzssf_, aproximate_place), num_fmt)
+            # worksheet.write(
+            #     row, 29, round(tzssf_, aproximate_place), num_fmt)
 
             row += 1
         worksheet.write(
@@ -434,60 +434,59 @@ class MontlyStatmentXlsReport(models.TransientModel):
         worksheet.write(
             row, 5, basic_total, bold_center_num_frmt)
 
+        # worksheet.write(
+        #     row, 6, living_exp_total, bold_center_num_frmt)
+
+        # worksheet.write(
+        #     row, 7, cna_allow_total, bold_center_num_frmt)
+        # worksheet.write(
+        #     row, 8, mda_allow_total, bold_center_num_frmt)
+        # worksheet.write(
+        #     row, 9, foo_allow_total, bold_center_num_frmt)
+        # worksheet.write(
+        #     row, 10, nhif_allow_total, bold_center_num_frmt)
+        # worksheet.write(
+        #     row, 11, ben_allow_total, bold_center_num_frmt)
+        # worksheet.write(
+        #     row, 12, over_allow_total, bold_center_num_frmt)
         worksheet.write(
-            row, 6, living_exp_total, bold_center_num_frmt)
+            row, 6, leav_allow_total, bold_center_num_frmt)
 
         worksheet.write(
-            row, 7, cna_allow_total, bold_center_num_frmt)
-        worksheet.write(
-            row, 8, mda_allow_total, bold_center_num_frmt)
-        worksheet.write(
-            row, 9, foo_allow_total, bold_center_num_frmt)
-        worksheet.write(
-            row, 10, nhif_allow_total, bold_center_num_frmt)
-        worksheet.write(
-            row, 11, ben_allow_total, bold_center_num_frmt)
-        worksheet.write(
-            row, 12, over_allow_total, bold_center_num_frmt)
-        worksheet.write(
-            row, 13, leav_allow_total, bold_center_num_frmt)
-
-        worksheet.write(
-            row, 14, gross_total, bold_center_num_frmt)
+            row, 7, gross_total, bold_center_num_frmt)
    
         worksheet.write(
-            row, 15, NSSFEMPLOYEER_total, bold_center_num_frmt)
+            row, 8, NSSFEMPLOYEER_total, bold_center_num_frmt)
         worksheet.write(
-            row, 16, txb_total, bold_center_num_frmt)
+            row, 9, txb_total, bold_center_num_frmt)
         worksheet.write(
-            row, 17, payee_total, bold_center_num_frmt)
+            row, 10, payee_total, bold_center_num_frmt)
         worksheet.write(
-            row, 18, NSSFEMPLOYEE_total, bold_center_num_frmt)
+            row, 11, NSSFEMPLOYEE_total, bold_center_num_frmt)
         worksheet.write(
-            row, 19, NHIFEMPLOYEE_total, bold_center_num_frmt)
+            row, 12, NHIFEMPLOYEE_total, bold_center_num_frmt)
         worksheet.write(
-            row, 20, helsb_total, bold_center_num_frmt)
+            row, 13, helsb_total, bold_center_num_frmt)
         worksheet.write(
-            row, 21, wcf_total, bold_center_num_frmt)
+            row, 14, wcf_total, bold_center_num_frmt)
 
         worksheet.write(
-            row, 22, sdl_total, bold_center_num_frmt)
+            row, 15, sdl_total, bold_center_num_frmt)
 
 
         worksheet.write(
-            row, 23, ded_total, bold_center_num_frmt)
+            row, 16, ded_total, bold_center_num_frmt)
         worksheet.write(
-            row, 24, tnssf_total, bold_center_num_frmt)
+            row, 17, tnssf_total, bold_center_num_frmt)
         worksheet.write(
-            row, 25, tnhif_total, bold_center_num_frmt)
+            row, 18, tnhif_total, bold_center_num_frmt)
         worksheet.write(
-            row, 26, loan_total, bold_center_num_frmt)
+            row, 19, loan_total, bold_center_num_frmt)
         worksheet.write(
-            row, 27, adv_salary_total, bold_center_num_frmt)
+            row, 20, adv_salary_total, bold_center_num_frmt)
         worksheet.write(
-            row, 28, net_total, bold_center_num_frmt)
-        worksheet.write(
-            row, 29, tzssf_total, bold_center_num_frmt)
+            row, 21, net_total, bold_center_num_frmt)
+        
         
 
 

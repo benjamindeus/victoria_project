@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+	    <!-- <record id="res_company_view_form_payroll_validation" model="ir.ui.view">
+	        <field name="name">res.company.view.form.payroll_validation</field>
+	        <field name="model">res.company</field>
+	        <field name="inherit_id" ref="base.view_company_form"/>
+	        <field name="arch" type="xml">
+	            <xpath expr="//field[@name='email']" position="after">
+	                <field name="prepare_by" invisible="0"/>
+	                <field name="certified_by" invisible="0"/>
+	                <field name="approved_by" invisible="0"/>
+	            </xpath>
+	        </field>
+	    </record> -->
+        
+        <record id="res_config_settings_payroll_approval_fields" model="ir.ui.view">
+            <field name="name">res.config.settings.view.form.inherit.hr.payroll</field>
+            <field name="model">res.config.settings</field>
+            <field name="priority" eval="45"/>
+            <field name="inherit_id" ref="hr_payroll_community.res_config_settings_view_form_payroll"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@id='localization_text']" position="after">
+                   <div class="mt16" id="payroll_p_approval">
+                        <label class="col-lg-4 o_light_label" for="prepare_by"/>
+                        <field name="prepare_by" widget="many2many_tags"/>
+                   </div>
+                   <div class="mt16" id="payroll_c_approval">
+                        <label class="col-lg-4 o_light_label" for="certified_by"/>
+                        <field name="certified_by" widget="many2many_tags"/>
+                   </div>
+                   <div class="mt16" id="payroll_a_approval">
+                        <label class="col-lg-4 o_light_label" for="approved_by"/>
+                        <field name="approved_by" widget="many2many_tags"/>
+                   </div>
+                        <div class="mt16">
+                        <label class="col-lg-4 o_light_label" for="usd_rate"/>
+                        <field name="usd_rate"/>
+                   </div>
+		</xpath>
+            </field>
+    </record> 
+
+
+    <record id="hr_payslip_run_form_approvals_athumani" model="ir.ui.view">
+        <field name="name">hr.payslip.run.form</field>
+        <field name="model">hr.payslip.run</field>
+        <field name="inherit_id" ref="hr_payroll_community.hr_payslip_run_form"/>
+        <field name="arch" type="xml">
+            <!-- ben added this fo used -->
+<!--            <field name="state" position="replace">-->
+<!--                <field name="state" widget="statusbar" statusbar_visible='draft,prepare,certified,approved,close' clickable="1"/>-->
+<!--            </field>-->
+                        <!-- ben added this fo used -->
+
+            <xpath expr="//button[@name='%(hr_payroll_community.action_hr_payslip_by_employees)d']" position="replace">
+                  <button name="%(hr_payroll_community.action_hr_payslip_by_employees)d" type="action" states="draft" string="Generate Payslips" class="oe_highlight"/>
+<!--                  <button name="%(hr_payroll_community.action_hr_payslip_by_employees)d" type="action" states="draft,prepare,certified,approved" string="Generate Payslips" class="oe_highlight"/>-->
+            </xpath>
+            <xpath expr="//button[@name='close_payslip_run']" position="replace">
+                  <button name="close_payslip_run" type="object" string="Close" states="approved" class="oe_highlight"/>
+<!--                  <button name="close_payslip_run" type="object" string="Close" states="draft,prepare,certified,approved" class="oe_highlight"/>-->
+            </xpath>
+
+            <xpath expr="//button[@name='%(hr_payroll_community.action_hr_payslip_by_employees)d']" position="after">
+                <button string="Prepare" name="prepare_payslip_batch" type="object" states="draft"/>
+                <button string="Certify" name="certified_payslip_batch" type="object" states="prepare" class="btn btn-primary"/>
+                <button string="Approve" name="approve_payslip_batch" type="object" states="certified" class="btn btn-success"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_hr_payslip_tree_batchstate_athumani" model="ir.ui.view">
+        <field name="name">hr.payslip.tree</field>
+        <field name="model">hr.payslip</field>
+        <field name="inherit_id" ref="hr_payroll_community.view_hr_payslip_tree"/>
+        <field name="arch" type="xml">
+            <field name="state" position="after">
+                <field name="batch_state"/>
+            </field>
+            <field name="name" position="after">
+		
+                <field name="gross"/>
+                <field name="nssf_emp" string="NSSF"/>
+                <field name="taxable"/>
+                
+                <field name="payee"/>
+              
+                <field name="ADSDL"/>
+
+                <field name="WCF_ADM" string="WCF"/>
+               <field name="LO" string ="Advance Salary"/>
+                <field name="HLB"/>
+                <field name="tot_ded"/>
+                <field name="net"/>
+                 
+                <field name="batch_state"/>
+            </field>
+        </field>
+    </record>
+       
+    <record id="view_hr_payslip_form_inherit_athumani" model="ir.ui.view">
+        <field name="name">hr.payslip.form.inherit</field>
+        <field name="model">hr.payslip</field>
+        <field name="inherit_id" ref="hr_payroll_community.view_hr_payslip_form"/>
+        <field name="arch" type="xml">
+            <field name="credit_note" position="after">
+                <field name="penalt_total" invisible="0" widget="monetory"/>
+                <field name="penalt_line_ids_ben" widget="many2many_tags" invisible="0"/>
+                <!--                ben added this-->
+                <!-- <field name="arrea_total" invisible="0" widget="monetory"/>
+                <field name="arrea_line_ids_ben" widget="many2many_tags" invisible="0"/>
+
+               
+                            ben added this-->
+                <!-- <field name="arrears_payslip" invisible="0"/> -->
+                <!-- <field name="contract_review" invisible="0"/> -->
+                <!-- <field name="festive_payslip" invisible="0"/> -->
+                <!-- <field name="late_join_payslip" invisible="0"/> -->
+                <!-- <field name="contract_renew_arreaz" invisible="0"/> -->
+
+                <!-- <field name="arrears_payslip_promotion" invisible="0"/> -->
+                <field name="helsb_payslip" invisible="1"/>
+                <!-- <field name="food_allowance" invisible="1"/> -->
+                <!-- <field name="enjoy_leave" invisible="1"/>
+                <field name="festival_amt" invisible="1"/>
+                <field name="conveyance" invisible="1"/>
+                <field name="medical" invisible="1"/>
+                <field name="enjoy_leave" invisible="0"/> -->
+            </field>
+            <!-- <xpath expr="//page/field[@name='worked_days_line_ids']//tree/field[@name='name']" position="after">
+                <field name="number_of_days_show" />
+            </xpath> -->
+        </field>
+    </record>
+    
+    </data>
+    <!-- <data noupdate="1">
+
+            <record id="payslip_batch_approval_notification" model="mail.template">
+            <field name="name">Payslip Batch Approval Notification</field>
+            <field name="model_id" ref="employee_additional.model_hr_payslip_run"/>
+            <field name="subject">Approval for ${object.name}</field>
+            <field name="email_from">${user.email_formatted | safe}</field>
+            <field name="body_html" type="html">
+<div>
+    Dear Sir/Madam,<br/><br/>
+    Payslip Batch: ${object.name} is waiting for your approval, please approve it.<br/>
+    <br/><br/>
+    Thank you<br/>
+</div></field>
+            <field name="auto_delete" eval="True"/>
+            <field name="user_signature" eval="False"/>
+        </record> -->
+
+        <!-- <record id="payslip_batch_prepare_notification" model="mail.template">
+            <field name="name">Payslip Batch Prepare Notification</field>
+            <field name="model_id" ref="employee_additional.model_hr_payslip_run"/>
+            <field name="subject">Prepare for ${object.name}</field>
+            <field name="email_from">${user.email_formatted | safe}</field>
+            <field name="body_html" type="html">
+<div>
+    Dear Sir/Madam,<br/><br/>
+    Payslip Batch: ${object.name} is waiting for your approval, please prepare it.<br/>
+    <br/><br/>
+    Thank you<br/>
+</div></field>
+            <field name="auto_delete" eval="True"/>
+            <field name="user_signature" eval="False"/>
+        </record> -->
+
+        <!-- <record id="payslip_batch_certify_notification" model="mail.template">
+            <field name="name">Payslip Batch Certify Notification</field>
+            <field name="model_id" ref="employee_additional.model_hr_payslip_run"/>
+            <field name="subject">Certify for ${object.name}</field>
+            <field name="email_from">${user.email_formatted | safe}</field>
+            <field name="body_html" type="html">
+<div>
+    Dear Sir/Madam,<br/><br/>
+    Payslip Batch: ${object.name} is waiting for your approval, please certify it.<br/>
+    <br/><br/>
+    Thank you<br/>
+</div></field>
+            <field name="auto_delete" eval="True"/>
+            <field name="user_signature" eval="False"/>
+        </record> 
+    </data>-->
+</odoo>

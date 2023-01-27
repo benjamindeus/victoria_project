@@ -5,6 +5,218 @@
         <t t-foreach="docs" t-as="o">
             <t t-call="web.external_layout">
                 <div class="page">
+                   <h2>VIGU Payslip</h2>
+                    <p t-field="o.name" class="py-4 font-weight-bold"/>
+
+                    <table class="table table-sm table-bordered">
+                        <tr>
+                            <td><strong>Name</strong></td>
+                            <td><span t-field="o.employee_id"/></td>
+                            <td><strong>Employee ID</strong></td>
+                            <td><span t-field="o.employee_id.empl_id"/></td>
+
+
+                        </tr>
+<!--                        <tr>-->
+<!--                            <td><strong>Address</strong></td>-->
+<!--                            <td colspan="">-->
+<!--                                <div t-field="o.employee_id.address_home_id"-->
+<!--                                    t-options='{"widget": "contact", "fields": ["address", "name", "phone"], "no_marker": True, "phone_icons": True}'/>-->
+<!--                            </td>-->
+<!--                            <td><strong>Branch</strong></td>-->
+<!--                            <td><span t-field="o.employee_id.branch_id"/></td>-->
+<!--                        </tr>-->
+<!--                            <td><strong>Branch</strong></td>-->
+<!--                            <td><span t-field="o.employee_id.branch_id"/></td>-->
+    
+                        <tr>
+                            <td><strong>NSSF NUMBER</strong></td>
+                            <td><span t-field="o.employee_id.nssf_number"/></td>
+                            <td><strong>NHIF NUMBER</strong></td>
+                            <td><span t-field="o.employee_id.nhif_number"/></td>
+                        </tr>
+                        <tr>
+                            <td><strong>TIN NUMBER</strong></td>
+                            <td><span t-field="o.employee_id.tin_number"/></td>
+                            <td><strong>Reference</strong></td>
+                            <td><span t-field="o.number"/></td>
+                        </tr>
+<!--                        <tr>-->
+<!--                            <td><strong>Date From</strong></td>-->
+<!--                            <td><span t-field="o.date_from"/></td>-->
+<!--                            <td><strong>Date To</strong></td>-->
+<!--                            <td><span t-field="o.date_to"/></td>-->
+<!--                        </tr>-->
+                    </table>
+
+<!--                    <table class="table table-sm">-->
+<!--                        <thead>-->
+<!--                            <tr>-->
+<!--                                <th>Code</th>-->
+<!--                                <th>Earnings</th>-->
+<!--                                <th>Quantity/rate</th>-->
+<!--                                <th>Amount</th>-->
+<!--                                <th>Deduction</th>-->
+<!--                            </tr>-->
+<!--                        </thead>-->
+<!--                    </table>-->
+
+                    <div class="row px-2">
+                        <div class="w-50">
+                        <table class="table table-sm table-bordered">
+                            <!-- <thead> -->
+                                <tr>
+                                    <th colspan="2" class="text-center font-weight-bold">Earnings</th>
+    <!--                                <th>Code</th>-->
+<!--                                    <th>Name</th>-->
+    <!--                                <th>Quantity/rate</th>-->
+    <!--                                <th>Amount</th>-->
+<!--                                    <th>Total</th>-->
+                                </tr>
+                            <!-- </thead>
+                            <tbody> -->
+                                    <tr t-foreach="o.line_ids.filtered(lambda line: line.appears_on_payslip and line.amount >0 and (line.category_id.code =='BASIC' or line.category_id.code =='ALW' or line.category_id.code =='GROSS' or line.category_id.code =='HRA' or line.category_id.code =='DA' or line.category_id.code =='Travel'  or line.category_id.code =='Meal' or line.category_id.code =='Medical' or line.category_id.code =='others' or line.category_id.code =='TAXABLE'))" t-as="line">
+    <!--                                <td><span t-field="line.code"/></td>-->
+    <!--                                    NSSF TOTAL-->
+                                    <td><span t-field="line.name" class="font-weight-bold text-capitalize"/></td>
+    <!--                                <td><span t-field="line.quantity"/></td>-->
+    <!--                                <td><span t-esc="line.amount"-->
+    <!--                                          t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/></td>-->
+                                    <td><span t-esc="line.total"
+                                              t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/></td>
+
+                                </tr>
+
+                            <!-- </tbody> -->
+                        </table>
+                            </div>
+                        <div class="w-50">
+
+                        <table  class="table table-sm table-bordered">
+                        <!-- <thead> -->
+                            <tr>
+                                <th colspan="2" class="text-center font-weight-bold">Deductions</th>
+
+<!--                                <th>Code</th>-->
+<!--                                <th>Name</th>-->
+<!--                                <th>Quantity/rate</th>-->
+<!--                                <th>Amount</th>-->
+<!--                                <th>Total</th>-->
+                            </tr>
+                        <!-- </thead> -->
+                        <!-- <tbody> -->
+<!--                            and (line.category_id.code !='TALW' and line.category_id.code !='BASIC' and line.category_id.code !='ALW' and line.category_id.code !='GROSS' and line.category_id.code =='NET' and line.category_id.code !='COMP' and line.category_id.code !='HRA' and line.category_id.code !='DA' and line.category_id.code !='Travel'  and line.category_id.code !='Meal' and line.category_id.code !='Medical' and line.category_id.code !='others' and line.category_id.code !='TAXABLE')-->
+                                <tr t-foreach="o.line_ids.filtered(lambda line: line.appears_on_payslip and line.amount >0 and (line.category_id.code =='NET' or line.category_id.code =='DED' or line.category_id.code =='NSSFT' or line.category_id.code =='TNHIF' or line.category_id.code =='TXD'))" t-as="linez">
+<!--                                <td><span t-field="line.code"/></td>-->
+<!--                                    NSSF TOTAL-->
+                                <td><span t-field="linez.name" class="font-weight-bold text-capitalize"/></td>
+<!--                                <td><span t-field="line.quantity"/></td>-->
+<!--                                <td><span t-esc="line.amount"-->
+<!--                                          t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/></td>-->
+                                <td><span t-esc="linez.total"
+                                          t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/></td>
+
+                            </tr>
+
+                        <!-- </tbody> -->
+                    </table>
+                    </div>
+                    </div>
+<br/>
+<br/>
+
+                    <!-- <table class="table table-sm table-bordered pt-4">
+                            <tr>
+                                <td><strong>Bank Name</strong></td>
+                                <td><span t-field="o.employee_id.bank_name"/></td>
+                                <td><strong>Bank Account</strong></td>
+                                <td><span t-field="o.employee_id.bank_account_number"/></td>
+                            </tr>
+                    </table> -->
+                    <!-- <div class="row px-5">
+                        <p class="font-weight-bold" t-if="o.employee_id.helsb_line_ids">* OUTSTANDING HESLB: <span class="font-weight-normal" t-field="o.employee_id.helsb_line_ids[-1].balance_amt" t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/></p>
+                    </div> -->
+                    <!-- <div class="row px-5"> -->
+                        <!-- <p class="font-weight-bold" t-if="o.employee_id.helsb_line_ids">* OUTSTANDING LOAN: <span class="font-weight-normal" t-field="o.employee_id.loan_count" t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/></p> -->
+                        <!-- <p class="font-weight-bold" t-if="o.employee_id.remain_loan_balance >0">* OUTSTANDING STAFF LOAN: <span class="font-weight-normal" t-field="o.employee_id.remain_loan_balance" t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/></p>
+                    </div> -->
+<!--                    <div class="row">-->
+<!--                        <div class="col">-->
+<!--                            <div class="row"><strong>Bank Name: </strong><span t-field="o.employee_id.bank_name"/></div>-->
+<!--                        </div>-->
+<!--                        <div class="col">-->
+<!--                            <div class="row"><strong>Bank Account: </strong><span t-field="o.employee_id.bank_account_number"/></div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+
+                    <p class="text-right"><strong>Authorized signature</strong></p>
+                    <!-- <img class='text-right' src="/hr_payroll_community/static/src/img/asa_sign.png"  -->
+
+                    <img class='text-right' src="/hr_payroll_community/static/img/asa_sign.png" 
+                        height="50px" width="100px"/>
+                    <p class="text-right"><strong>.......................................</strong></p>
+                    <p class="text-right"><strong>Head of HR and Admin</strong></p>
+                </div>
+            </t>
+        </t>
+    </t>
+<!-- </t> -->
+</template>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- <t t-call="web.html_container">
+        <t t-foreach="docs" t-as="o">
+            <t t-call="web.external_layout">
+                <div class="page">
                     <h2>Pay Slip</h2>
                     <p t-field="o.name"/>
 
@@ -70,6 +282,6 @@
                 </div>
             </t>
         </t>
-    </t>
-</template>
+    </t> -->
+<!-- </template> -->
 </odoo>

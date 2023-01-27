@@ -587,6 +587,22 @@ class HrPayslipInput(models.Model):
                                   help="The contract for which applied this input")
 
 
+
+
+
+class ResCompany(models.Model):
+    _inherit = 'res.company'
+
+    prepare_by = fields.Many2many('res.users', 'res_company_prepare_by_rel',
+        'company_id', 'p_user_id', string='Prepared By')
+    certified_by = fields.Many2many('res.users', 'res_company_certified_by_rel',
+        'company_id', 'c_user_id', string='Certified By')
+    approved_by = fields.Many2many('res.users', 'res_company_approved_by_rel',
+        'company_id', 'a_user_id', string='Approved By')
+    
+    
+    
+    
 class HrPayslipRun(models.Model):
     _name = 'hr.payslip.run'
     _description = 'Payslip Batches'
@@ -596,7 +612,10 @@ class HrPayslipRun(models.Model):
                                states={'draft': [('readonly', False)]})
     state = fields.Selection([
         ('draft', 'Draft'),
-        ('close', 'Close'),
+        ('prepare', 'Prepared'),
+        ('certified', 'Certified'),
+        ('approved', 'Approved'),
+        ('close', 'Close')
     ], string='Status', index=True, readonly=True, copy=False, default='draft')
     date_start = fields.Date(string='Date From', required=True, readonly=True, help="start date",
                              states={'draft': [('readonly', False)]},
@@ -609,12 +628,15 @@ class HrPayslipRun(models.Model):
                                  states={'draft': [('readonly', False)]},
                                  help="If its checked, indicates that all payslips generated from here are refund "
                                       "payslips.")
+    payroll_date=fields.Date(string="Payroll Last Run Date",help="this will help to calculate late join date" , readonly=True,required=True,default=fields.Date.today()
+        ,states={'draft': [('readonly', False)]},)
 
     def draft_payslip_run(self):
         return self.write({'state': 'draft'})
 
     def close_payslip_run(self):
         return self.write({'state': 'close'})
+
 
 
 class ResourceMixin(models.AbstractModel):

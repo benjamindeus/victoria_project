@@ -15,7 +15,6 @@
                             <field name="date"/>
 
                         </group>
-
                     </group>
                 </sheet>
             </form>
@@ -41,7 +40,7 @@
         <field name="res_model">custom.attendance</field>
         <field name="view_mode">tree,form</field>
     </record>
-    <menuitem id="custom_attendance_types_main_menu" name="Attendance Custom"
+    <menuitem id="custom_attendance_types_main_menu" name="Employee Particulars"
     	parent="hr.menu_hr_root" />
 
     <menuitem id="custom_attendance_main_menu" name="Upload Attendance" parent="custom_attendance_types_main_menu" action="action_hr_custom_attendance"/>

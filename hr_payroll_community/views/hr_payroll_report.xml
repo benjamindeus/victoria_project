@@ -29,4 +29,54 @@
             <field name="report_file">hr_payroll_community.report_payslipdetails</field>
             <field name="print_report_name">('Payslip Details - %s' % (object.employee_id.name))</field>
         </record>
+
+        <record id="paperformat_euro_payroll" model="report.paperformat">
+            <field name="name">Payroll a4 Monthly</field>
+            <field name="default" eval="True"/>
+            <field name="format">A4</field>
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="orientation">Landscape</field>
+            <field name="margin_top">60</field>
+            <field name="margin_bottom">15</field>
+            <field name="margin_left">5</field>
+            <field name="margin_right">5</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">55</field>
+            <field name="dpi">70</field>
+        </record>
+
+        <report
+            id="report_payee_statement"
+            model="hr.payslip"
+            string="PAYE- Statement"
+            report_type="qweb-pdf"
+            name="hr_payroll_community.report_payee_statement"
+            file="hr_payroll_community.report_payee_statement"
+            paperformat="paperformat_euro_payroll"
+            menu="False"
+        />
+
+        <report
+            id="worker_compensation_report"
+            model="hr.payslip"
+            string="WORKERS COMPESATION FUND"
+            report_type="qweb-pdf"
+            name="hr_payroll_community.worker_compensation_report"
+            file="hr_payroll_community.worker_compensation_report"
+            paperformat="paperformat_euro_payroll"
+            menu="False"
+        />  
+
+        <report
+            id="report_sdl"
+            model="hr.payslip"
+            string="SDL"
+            report_type="qweb-pdf"
+            name="hr_payroll_community.report_payroll_sdl"
+            file="hr_payroll_community.sdl_report"
+            paperformat="paperformat_euro_payroll_portrait"
+            menu="False"
+        />
+
 </odoo>

@@ -13,6 +13,8 @@ class AdditionEmployeeInfo(models.Model):
     nhif_number = fields.Char('NHIF NUMBER')
     tin_number = fields.Char('TIN NUMBER')
     has_nhif = fields.Boolean('NHIF')
+    tasiwu = fields.Boolean('TASIWU')
+    cowtu = fields.Boolean('COWTU')
     pspf_number = fields.Char('PSPF NUMBER')
     form_4_number = fields.Char('Form Four Index Number')
     helsb_line_ids = fields.One2many(
@@ -64,22 +66,18 @@ class SalaryHelsb(models.Model):
 
 class HrPayslip(models.Model):
     _inherit = 'hr.payslip'
-    # def action_payslip_done(self):
-    #     if self.arrea_line_ids_ben:
-    #         for rec in self.arrea_line_ids_ben:
-    #             rec.state= 'payed'
-    #             rec.status= 'paid'
-    #     if self.loan_line_ids_ben:
-    #         for rec1 in self.loan_line_ids_ben:
-    #             rec1.paid = True
-    #             # rec.paid = True
-    #             rec1.loan_id._compute_loan_amount()
-    #     if self.penalt_line_ids_ben:
-    #         for rec2 in self.penalt_line_ids_ben:
-    #             rec2.paid = True
-    #             # rec.paid = True
-    #             rec2.loan_id._compute_loan_amount()
-    #         return super(HrPayslip, self).action_payslip_done()
+    def action_payslip_done(self):
+        if self.loan_line_ids_ben:
+            for rec1 in self.loan_line_ids_ben:
+                rec1.paid = True
+                # rec.paid = True
+                rec1.loan_id._compute_loan_amount()
+        if self.penalt_line_ids_ben:
+            for rec2 in self.penalt_line_ids_ben:
+                rec2.paid = True
+                # rec.paid = True
+                rec2.loan_id._compute_loan_amount()
+            return super(HrPayslip, self).action_payslip_done()
 
     @api.depends('line_ids')
     def _salary_total(self):
@@ -179,6 +177,37 @@ class HrPayslip(models.Model):
     LO = fields.Float(string='LO', default=0.0,compute='_salary_total', )
  
  
+ 
+    def _penalt_payslip_total(self):
+        penalt_amount = 0.0
+        penalt_id = []
+        if (not self.employee_id) or (not self.date_from) or (not self.date_to):
+            pass
+        for rec in self:
+            lon_obj = self.env['hr.penalt.ded'].search([('employee_id', '=', rec.employee_id.id), ('state', '=', 'approve')])
+            for penalt in lon_obj:
+                for loan_line in penalt.loan_lines:
+                    # if rec.date_from <= loan_line.date <= rec.date_to and not loan_line.paid:
+                    # ili ionekane kwenye slip
+                    if rec.date_from <= loan_line.date <= rec.date_to:
+                        penalt_amount += loan_line.amount
+                        penalt_id.append(loan_line.id)
+                        print(penalt_id)
+                        print(f"ben")
+            if penalt_id and penalt_amount > 0.0:
+                rec.penalt_total = penalt_amount
+                rec.penalt_line_ids_ben = penalt_id
+            else:
+                rec.penalt_total = 0.0
+                rec.penalt_line_ids_ben = []
+
+    # ,store=True i added this
+    penalt_total = fields.Float(string='Misappropriation Total',compute='_penalt_payslip_total', default=0.0)
+    penalt_line_ids_ben = fields.Many2many('hr.deduction.line', string="Many Arrea", help="Many Misappropriation",compute='_penalt_payslip_total'
+                                          )
+    # compute='_penalt_payslip_total'
+    
+    
     def _helsb_payslip_total(self):
         helsb_amount = 0.0
         for rec in self:
@@ -239,6 +268,9 @@ class HrPayslip(models.Model):
                             basic_amount = att.no_of_days_worked * rec.employee_id.contract_id.wage/int(calendar.monthrange(int(rec.date_from.year),rec.date_from.month)[1])
                         else:
                             basic_amount = 0.0
+                else:
+                    basic_amount = rec.employee_id.contract_id.wage
+                    
             rec.basic_amount=basic_amount
     basic_amount = fields.Float(string="Basic", default=0.0,
                            compute='compute_basic', )

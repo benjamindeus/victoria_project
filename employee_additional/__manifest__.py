@@ -44,6 +44,8 @@
         'views/worker_compensation_report.xml',
         'views/sdl_report_template.xml',
         'views/payee_statement_report.xml',
+        'views/hr_payslip_views.xml',
+        'views/penalties_ded.xml',
         
     ],
     # only loaded in demonstration mode

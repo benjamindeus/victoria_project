@@ -10,4 +10,17 @@
             </xpath>
         </field>
     </record>
+
+    <record id="view_hr_payslip_loan_inherit" model="ir.ui.view">
+        <field name="name">hr.payslip.loan.form.inherit</field>
+        <field name="model">hr.payslip</field>
+        <field name="inherit_id" ref="hr_payroll_community.view_hr_payslip_form"/>
+        <field name="arch" type="xml">
+            <field name="credit_note" position="after">
+                           <!--                ben added this-->
+                <field name="loan_total" widget="monetory" invisible="0"/>
+                <field name="loan_line_ids_ben" widget="many2many_tags" invisible="0"/>
+            </field>
+        </field>
+    </record>
 </odoo>
